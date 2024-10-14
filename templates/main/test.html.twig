@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Test
+{% endblock %}
+
+{% block body %}
+    {% set characters = ["Raiden", "Miko", "Furina", "Zhongli"] %}
+
+    {% for character in characters %}
+        <div>{{ loop.index }}. {{ character }}</div>
+    {% endfor %}
+{% endblock %}
