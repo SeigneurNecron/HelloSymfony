@@ -70,5 +70,13 @@ select {
 }
 
 .flash-success {
-    background-color: seagreen;
+    background-color: hsl(120, 55%, 24%);
+}
+
+.flash-warning {
+    background-color: hsl(31, 55%, 33%);
+}
+
+.flash-error {
+    background-color: hsl(0, 55%, 30%);
 }
