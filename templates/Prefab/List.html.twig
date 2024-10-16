@@ -3,6 +3,8 @@
 {% set titleStr = type ~ ' List' %}
 {% set typeClass = type|replace({' ': ''}) %}
 
+{% block bodyTitle %}{{ parent() }} ({{ entities|length }}){% endblock %}
+
 {% block body %}
     {# TODO check user is authorized to create #}
     <nav>
@@ -12,10 +14,10 @@
     </nav>
 
     <section>
-        {% for entity in entities %}
-            <a href="{{ path(typeClass ~ '_Details', {'id': entity.id}) }}" title="{{ entity.name }}">
-                {{ entity.name }}
-            </a>
-        {% endfor %}
+        <ul>
+            {% for entity in entities %}
+                <li><a href="{{ path(typeClass ~ '_Details', {'id': entity.id}) }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
+            {% endfor %}
+        </ul>
     </section>
 {% endblock %}

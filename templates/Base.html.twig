@@ -30,9 +30,7 @@
         {% endfor %}
 
         <main>
-            {% block bodyTitle %}
-                <h2>{{ titleStr }}</h2>
-            {% endblock %}
+            <h2>{% block bodyTitle %}{{ titleStr }}{% endblock %}</h2>
 
             {% block body %}{% endblock %}
         </main>
