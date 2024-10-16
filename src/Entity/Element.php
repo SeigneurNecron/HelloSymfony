@@ -16,7 +16,7 @@ class Element {
 
     #[Assert\NotBlank(message: "Please provide a name")]
     #[Assert\Length(max: 255, maxMessage: "That name is too long")]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
     #[Assert\NotBlank(message: "Please provide a color")]

@@ -21,17 +21,18 @@ class Character {
 
     #[Assert\NotBlank(message: "Please provide a name")]
     #[Assert\Length(max: 255, maxMessage: "That name is too long")]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $dateCreated = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $dateModified = null;
 
-    #[ORM\Column]
+    #[ORM\Column/*(options: ["default" => false])*/]
     private ?bool $rare = null;
 
     #[ORM\Column(enumType: Genre::class)]
