@@ -11,7 +11,7 @@ use DateTime;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/Character', name: 'Character_')]
-class CharactersController extends AbstractEntityController {
+class CharactersController extends AbstractCreatableEntityController {
 
     public function __construct(CharacterRepository $repository) {
         parent::__construct(Character::class, CharacterType::class, $repository);
