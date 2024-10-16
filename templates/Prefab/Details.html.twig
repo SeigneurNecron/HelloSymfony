@@ -11,7 +11,7 @@
         <ul>
             <li><a href="{{ path(typeClass ~ '_List') }}" title="Back to list">Back to list</a></li>
             {# TODO check user is authorized to edit #}
-            <li><a href="{{ path(typeClass ~ '_Edit', {'id': element.id}) }}" title="Edit">Edit</a></li>
+            <li><a href="{{ path(typeClass ~ '_Edit', {'id': entity.id}) }}" title="Edit">Edit</a></li>
         </ul>
     </nav>
 {% endblock %}

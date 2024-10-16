@@ -16,7 +16,7 @@
         <ul>
             <li><a href="{{ path(typeClass ~ '_List') }}" title="Back to list">Back to list</a></li>
             {% if not new %}
-                <li><a href="{{ path(typeClass ~ '_Detail', {'id': element.id}) }}" title="Back to details">Back to details</a></li>
+                <li><a href="{{ path(typeClass ~ '_Details', {'id': entity.id}) }}" title="Back to details">Back to details</a></li>
             {% endif %}
         </ul>
     </nav>
