@@ -1,0 +1,21 @@
+{% extends 'Base.html.twig' %}
+
+{% set titleStr = type ~ ' List' %}
+{% set typeClass = type|replace({' ': ''}) %}
+
+{% block body %}
+    {# TODO check user is authorized to create #}
+    <nav>
+        <ul>
+            <li><a href="{{ path(typeClass ~ '_Create') }}" title="Add {{ typeClass }}">Add {{ typeClass }}</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        {% for entity in entities %}
+            <a href="{{ path(typeClass ~ '_Details', {'id': entity.id}) }}" title="{{ entity.name }}">
+                {{ entity.name }}
+            </a>
+        {% endfor %}
+    </section>
+{% endblock %}

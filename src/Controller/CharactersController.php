@@ -1,31 +1,33 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Character;
+use App\Form\CharacterType;
+use App\Repository\CharacterRepository;
+use DateTime;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/characters', name: 'characters_')]
-class CharactersController extends AbstractController
-{
-    #[Route(path: '', name: 'list')]
-    public function list(): Response
-    {
-        return $this->render('characters/list.html.twig');
+#[Route(path: '/Character', name: 'Character_')]
+class CharactersController extends AbstractEntityController {
+
+    public function __construct(CharacterRepository $repository) {
+        parent::__construct(Character::class, CharacterType::class, $repository);
     }
 
-    #[Route(path: '/create', name: 'create')]
-    public function create(): Response
-    {
-        return $this->render('characters/create.html.twig');
+    protected function newEntity(): Character {
+        return new Character();
     }
 
-    #[Route(path: '/details/{id}', name: 'details')]
-    public function details(int $id): Response
-    {
-        return $this->render('characters/details.html.twig', compact('id'));
+    protected function onCreateSubmission(object $entity): void {
+        $entity->setDateCreated(new DateTime());
+        $entity->setDateModified(new DateTime());
     }
+
+    protected function onEditSubmission(object $entity): void {
+        $entity->setDateModified(new DateTime());
+    }
+
 }

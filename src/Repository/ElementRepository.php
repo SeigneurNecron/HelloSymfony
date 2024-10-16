@@ -2,38 +2,38 @@
 
 namespace App\Repository;
 
-use App\Entity\Character;
+use App\Entity\Element;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Character>
+ * @extends ServiceEntityRepository<Element>
  */
-class CharacterRepository extends ServiceEntityRepository {
+class ElementRepository extends ServiceEntityRepository {
 
     public function __construct(ManagerRegistry $registry) {
-        parent::__construct($registry, Character::class);
+        parent::__construct($registry, Element::class);
     }
 
     //    /**
-    //     * @return Character[] Returns an array of Character objects
+    //     * @return Element[] Returns an array of Element objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
+    //        return $this->createQueryBuilder('e')
+    //            ->andWhere('e.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
+    //            ->orderBy('e.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Character
+    //    public function findOneBySomeField($value): ?Element
     //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
+    //        return $this->createQueryBuilder('e')
+    //            ->andWhere('e.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()
