@@ -14,12 +14,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: '`character`')]
 class Character extends AbstractNamedEntity {
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Assert\NotBlank]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $dateCreated = null;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Assert\NotBlank]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $dateModified = null;
 
     #[ORM\Column/*(options: ["default" => false])*/]
@@ -46,7 +46,7 @@ class Character extends AbstractNamedEntity {
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1)]
     private ?string $version = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeInterface $releaseDate = null;
 
     public function getDateCreated(): ?DateTimeInterface {
