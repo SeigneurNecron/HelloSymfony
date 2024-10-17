@@ -28,12 +28,6 @@ abstract class AbstractEntityController extends AbstractController {
         return $this->repository->find($id);
     }
 
-    protected function onCreateSubmission(object $entity): void {
-    }
-
-    protected function onEditSubmission(object $entity): void {
-    }
-
     #[Route(path: '', name: 'List')]
     public function list(): Response {
         $entities = $this->repository->findBy([], ['name' => 'ASC']);
@@ -51,21 +45,13 @@ abstract class AbstractEntityController extends AbstractController {
     public function edit(int $id, Request $request, EntityManagerInterface $entityManager): Response {
         // TODO maybe find by name instead of id, but that might cause issues if the entity is renamed
         $entity = $this->find($id);
-        $form = $this->createForm($this->formClass, $entity);
+        $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => 'Update']);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()) {
-            $this->onEditSubmission($entity);
-
-            if($form->isValid()) {
-                $entityManager->persist($entity);
-                $entityManager->flush();
-                $this->addFlash('success', $this->entityName . ' updated!');
-                return $this->redirectToRoute($this->entityName . '_Details', ["id" => $id]);
-            } else {
-                $this->addFlash('error', $this->entityName . ' update failed!');
-                return $this->redirectToRoute($this->entityName . '_Edit', ["id" => $id]);
-            }
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', $this->entityName . ' updated!');
+            return $this->redirectToRoute($this->entityName . '_Details', ["id" => $id]);
         }
 
         return $this->render('Prefab/Edit.html.twig', ["entity" => $entity, "form" => $form->createView(), "type" => $this->entityName, "new" => false]);

@@ -15,38 +15,46 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Character extends AbstractNamedEntity {
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: "Creation date is missing.")]
     private ?DateTimeInterface $dateCreated = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: "Last modification date is missing.")]
     private ?DateTimeInterface $dateModified = null;
 
-    #[ORM\Column/*(options: ["default" => false])*/]
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "Please indicate if the character is rare.")]
     private ?bool $rare = null;
 
     #[ORM\Column(enumType: Genre::class)]
+    #[Assert\NotBlank(message: "Please select the character's genre.")]
     private ?Genre $genre = null;
 
     #[ORM\Column(enumType: Size::class)]
+    #[Assert\NotBlank(message: "Please select the character's size.")]
     private ?Size $size = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "Please select the character's element.")]
     private ?Element $element = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "Please select the character's weapon category.")]
     private ?WeaponCategory $weaponCategory = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "Please select the character's region.")]
     private ?Region $region = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1)]
+    #[Assert\NotBlank(message: "Please enter the game version during which the character was released.")]
     private ?string $version = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\NotBlank(message: "Please enter the character's release date.")]
     private ?\DateTimeInterface $releaseDate = null;
 
     public function getDateCreated(): ?DateTimeInterface {

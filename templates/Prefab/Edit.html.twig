@@ -1,16 +1,10 @@
 {% extends 'Base.html.twig' %}
 
 {% set titleStr = (new ? 'Create' : 'Edit') ~ ' ' ~ type %}
-{% set buttonSrt = 'Save ' ~ (new ? 'new' : 'updated') ~ ' ' ~ type %}
 {% set typeClass = type|replace({' ': ''}) %}
 
 {% block body %}
-    {{ form_start(form) }}
-
-    {{ form_widget(form) }}
-    <button>{{ buttonSrt }}</button>
-
-    {{ form_end(form) }}
+    {{ form(form) }}
 
     <nav>
         <ul>

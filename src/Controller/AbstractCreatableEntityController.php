@@ -19,20 +19,13 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
     #[Route(path: '/Create', name: 'Create')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response {
         $entity = $this->newEntity();
-        $form = $this->createForm($this->formClass, $entity);
+        $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => 'Create']);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()) {
-            $this->onCreateSubmission($entity);
-
-            if($form->isValid()) {
-                $entityManager->persist($entity);
-                $entityManager->flush();
-
-                $this->addFlash('success', $this->entityName . ' created!');
-            } else {
-                $this->addFlash('error', $this->entityName . ' creation failed!');
-            }
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($entity);
+            $entityManager->flush();
+            $this->addFlash('success', $this->entityName . ' created!');
             return $this->redirectToRoute($this->entityName . '_Create');
         }
 

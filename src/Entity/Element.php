@@ -10,8 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Element extends AbstractNamedEntity {
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Please provide a color")]
-    #[Assert\Length(max: 255, maxMessage: "That color is too long")]
+    #[Assert\NotBlank(message: "Please provide a color.")]
+    #[Assert\Length(max: 255, maxMessage: "That color is too long.")]
     private ?string $color = null;
 
     public function getColor(): ?string {

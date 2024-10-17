@@ -3,21 +3,17 @@
 namespace App\Form;
 
 use App\Entity\WeaponCategory;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use App\Form\Base\AbstractEntityType;
+use App\Form\Trait\WithName;
+use App\Form\Trait\WithSubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class WeaponCategoryType extends AbstractType {
+class WeaponCategoryType extends AbstractEntityType {
 
-    public function buildForm(FormBuilderInterface $builder, array $options): void {
-        $builder
-            ->add('name');
-    }
+    use WithName, WithSubmitButton;
 
-    public function configureOptions(OptionsResolver $resolver): void {
-        $resolver->setDefaults([
-            'data_class' => WeaponCategory::class,
-        ]);
+    protected function doConfigureOptions(OptionsResolver $resolver): void {
+        $resolver->setDefault('data_class', WeaponCategory::class);
     }
 
 }
