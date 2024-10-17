@@ -4,7 +4,7 @@ namespace App\Form\Base;
 
 use App\Form\Attribute\BuildFormMethod;
 use App\Form\Attribute\ConfigureOptionsMethod;
-use ReflectionObject;
+use App\Utils\Reflect;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -12,31 +12,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractEntityType extends AbstractType {
 
     public final function buildForm(FormBuilderInterface $builder, array $options): void {
-        $buildFirstMethods = [];
-        $buildLastMethods = [];
+        $buildMethods = Reflect::getMethodsAndAttribute($this, BuildFormMethod::class);
+        $buildLaterMethods = [];
 
-        $reflection = new ReflectionObject($this);
-
-        foreach($reflection->getMethods() as $method) {
-            $attributes = $method->getAttributes(BuildFormMethod::class);
-
-            if(count($attributes) > 0) {
-                if($attributes[0]->newInstance()->atTheEnd) {
-                    $buildLastMethods[] = $method->getName();
-                }
-                else {
-                    $buildFirstMethods[] = $method->getName();
-                }
+        foreach($buildMethods as $buildMethod => $attribute) {
+            if($attribute->atTheEnd) {
+                $buildLaterMethods[] = $buildMethod;
             }
-        }
-
-        foreach($buildFirstMethods as $buildMethod) {
-            $this->$buildMethod($builder, $options);
+            else {
+                $this->$buildMethod($builder, $options);
+            }
         }
 
         $this->doBuildForm($builder, $options);
 
-        foreach($buildLastMethods as $buildMethod) {
+        foreach($buildLaterMethods as $buildMethod) {
             $this->$buildMethod($builder, $options);
         }
     }
@@ -46,13 +36,10 @@ abstract class AbstractEntityType extends AbstractType {
     }
 
     public final function configureOptions(OptionsResolver $resolver): void {
-        $reflection = new ReflectionObject($this);
+        $configureMethods = Reflect::getMethodsWithAttribute($this, ConfigureOptionsMethod::class);
 
-        foreach($reflection->getMethods() as $method) {
-            if(count($method->getAttributes(ConfigureOptionsMethod::class)) > 0) {
-                $methodName = $method->getName();
-                $this->$methodName($resolver);
-            }
+        foreach($configureMethods as $configureMethod) {
+            $this->$configureMethod($resolver);
         }
 
         $this->doConfigureOptions($resolver);
