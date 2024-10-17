@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
+use App\Controller\Base\AbstractCreatableEntityController;
 use App\Entity\WeaponCategory;
 use App\Form\WeaponCategoryType;
 use App\Repository\WeaponCategoryRepository;

@@ -2,17 +2,23 @@
 
 declare(strict_types = 1);
 
-namespace App\Controller;
+namespace App\Controller\Base;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\Base\AbstractEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * @template E
+ * @template F
+ * @template R
+ * @template-extends AbstractEntityController<E, F, R>
+ */
 abstract class AbstractCreatableEntityController extends AbstractEntityController {
 
-    protected function __construct(string $entityClass, string $formClass, ServiceEntityRepository $repository) {
+    protected function __construct(string $entityClass, string $formClass, AbstractEntityRepository $repository) {
         parent::__construct($entityClass, $formClass, $repository);
     }
 

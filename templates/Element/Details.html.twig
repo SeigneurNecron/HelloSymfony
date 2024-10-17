@@ -1,4 +1,10 @@
-{% extends 'Prefab/Details.html.twig' %}
+{% extends 'Prefab/DetailsWithSlug.html.twig' %}
 
 {% block entityDetails %}
+    <tr>
+        <td>
+            <label>color :</label>
+            <label>{{ entity.color }}</label>
+        </td>
+    </tr>
 {% endblock %}

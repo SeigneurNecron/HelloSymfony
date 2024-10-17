@@ -2,27 +2,42 @@
 
 declare(strict_types = 1);
 
-namespace App\Controller;
+namespace App\Controller\Base;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Base\AbstractNamedEntity;
+use App\Form\Base\AbstractEntityType;
+use App\Repository\Base\AbstractEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * @template E of AbstractNamedEntity
+ * @template F of AbstractEntityType<E>
+ * @template R of AbstractEntityRepository<E>
+ */
 abstract class AbstractEntityController extends AbstractController {
 
     protected readonly string $entityName;
 
-    protected function __construct(protected readonly string                  $entityClass,
-                                   protected readonly string                  $formClass,
-                                   protected readonly ServiceEntityRepository $repository) {
+    /**
+     * @param class-string<E> $entityClass
+     * @param class-string<F> $formClass
+     * @param R $repository
+     */
+    protected function __construct(protected readonly string                   $entityClass,
+                                   protected readonly string                   $formClass,
+                                   protected readonly AbstractEntityRepository $repository) {
         $splitClass = explode('\\', $entityClass);
         $this->entityName = $splitClass[count($splitClass) - 1];
     }
 
-    protected abstract function newEntity(): object;
+    /**
+     * @return E
+     */
+    protected abstract function newEntity();
 
     protected function find(int $id): object {
         return $this->repository->find($id);

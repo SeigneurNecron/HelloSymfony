@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Base;
 
 abstract class AbstractNameableEntity extends AbstractEntity {
 

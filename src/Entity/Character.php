@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Base\AbstractNamedEntity;
 use App\Enum\Genre;
 use App\Enum\Size;
 use App\Repository\CharacterRepository;

@@ -15,11 +15,17 @@ use App\Form\Trait\WithTimestamps;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template-extends AbstractEntityType<Character>
+ */
 class CharacterType extends AbstractEntityType {
 
     use WithName, WithTimestamps, WithSubmitButton;
+
+    public function __construct() {
+        parent::__construct(Character::class);
+    }
 
     protected function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
@@ -46,10 +52,6 @@ class CharacterType extends AbstractEntityType {
                 'widget' => 'single_text',
             ])
             ->add('version');
-    }
-
-    protected function doConfigureOptions(OptionsResolver $resolver): void {
-        $resolver->setDefault('data_class', Character::class);
     }
 
 }

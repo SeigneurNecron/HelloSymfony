@@ -4,8 +4,12 @@
 {% set typeClass = type|replace({' ': ''}) %}
 
 {% block body %}
-    {% block entityDetails %}
-    {% endblock %}
+    <table>
+        {% block entityCommonDetails %}
+        {% endblock %}
+        {% block entityDetails %}
+        {% endblock %}
+    </table>
 
     <nav>
         <ul>

@@ -2,6 +2,7 @@
 
 namespace App\Form\Base;
 
+use App\Entity\Base\AbstractEntity;
 use App\Form\Attribute\BuildFormMethod;
 use App\Form\Attribute\ConfigureOptionsMethod;
 use App\Utils\Reflect;
@@ -9,7 +10,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template E of AbstractEntity
+ */
 abstract class AbstractEntityType extends AbstractType {
+
+    /**
+     * @param class-string<E> $entityClass
+     */
+    protected function __construct(protected readonly string $entityClass) {
+    }
 
     public final function buildForm(FormBuilderInterface $builder, array $options): void {
         $buildMethods = Reflect::getMethodsAndAttribute($this, BuildFormMethod::class);
@@ -36,6 +46,8 @@ abstract class AbstractEntityType extends AbstractType {
     }
 
     public final function configureOptions(OptionsResolver $resolver): void {
+        $resolver->setDefault('data_class', $this->entityClass);
+
         $configureMethods = Reflect::getMethodsWithAttribute($this, ConfigureOptionsMethod::class);
 
         foreach($configureMethods as $configureMethod) {
