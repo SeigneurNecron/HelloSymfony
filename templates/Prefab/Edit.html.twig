@@ -1,5 +1,6 @@
 {% extends 'Base.html.twig' %}
 
+{% set new = entity.id is null %}
 {% set titleStr = (new ? 'Create' : 'Edit') ~ ' ' ~ type %}
 {% set typeClass = type|replace({' ': ''}) %}
 

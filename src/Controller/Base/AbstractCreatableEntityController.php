@@ -25,17 +25,24 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
     #[Route(path: '/Create', name: 'Create')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response {
         $entity = $this->newEntity();
-        $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => 'Create']);
+        $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Create"]);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($entity);
-            $entityManager->flush();
-            $this->addFlash('success', $this->entityName . ' created!');
-            return $this->redirectToRoute($this->entityName . '_Create');
+        if($form->isSubmitted()) {
+            if($form->isValid()) {
+                $entityManager->persist($entity);
+                $entityManager->flush();
+                $this->addFlash('success', $this->entityName . " created!");
+                return $this->redirectToRoute($this->entityName . '_Create');
+            }
+            else {
+                dump("Form validation failed."); // TODO tmp
+                dump(get_class($this));
+                dd($entity); // TODO tmp
+            }
         }
 
-        return $this->render('Prefab/Edit.html.twig', ["form" => $form->createView(), "type" => $this->entityName, "new" => true]);
+        return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form->createView()]);
     }
 
 }
