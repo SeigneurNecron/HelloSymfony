@@ -56,7 +56,7 @@ class Character extends AbstractNamedEntity {
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotBlank(message: "Please enter the character's release date.")]
-    private ?\DateTimeInterface $releaseDate = null;
+    private ?DateTimeInterface $releaseDate = null;
 
     public function getDateCreated(): ?DateTimeInterface {
         return $this->dateCreated;
@@ -72,7 +72,7 @@ class Character extends AbstractNamedEntity {
         return $this->dateModified;
     }
 
-    public function setDateModified(?DateTimeInterface $dateModified): static {
+    public function setDateModified(DateTimeInterface $dateModified): static {
         $this->dateModified = $dateModified;
 
         return $this;

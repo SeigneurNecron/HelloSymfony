@@ -32,7 +32,7 @@ class CharacterType extends AbstractEntityType {
             ->add('rare', options: ['required' => false])
             ->add('element', EntityType::class, [
                 'class' => Element::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('weaponCategory', EntityType::class, [
                 'class' => WeaponCategory::class,
