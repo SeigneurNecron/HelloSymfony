@@ -71,7 +71,7 @@ abstract class AbstractEntityController extends AbstractController {
             return $this->redirectToRoute($this->entityName . '_Details', ['id' => $id]);
         }
 
-        return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form->createView()]);
+        return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
     }
 
 }

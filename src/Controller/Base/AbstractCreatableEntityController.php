@@ -35,13 +35,12 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
                 $this->addFlash('success', $this->entityName . " created!");
                 return $this->redirectToRoute($this->entityName . '_Create');
             }
-//            else {
-//                dump("Form validation failed."); // FIXME Find why error messages don't show up in forms...
-//                dd($entity); // FIXME Stopping rendering on purpose
-//            }
+            else {
+                $this->addFlash('error', $this->entityName . " creation failed!");
+            }
         }
 
-        return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form->createView()]);
+        return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
     }
 
 }
