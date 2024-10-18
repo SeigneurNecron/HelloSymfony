@@ -24,7 +24,8 @@ class Character extends AbstractNamedEntity {
     private ?DateTimeInterface $dateModified = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Please indicate if the character is rare.")]
+    #[Assert\Type('bool')]
+    #[Assert\NotNull(message: "Please indicate if the character is rare.")]
     private ?bool $rare = null;
 
     #[ORM\Column(enumType: Genre::class)]

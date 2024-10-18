@@ -13,6 +13,7 @@ use App\Form\Trait\WithName;
 use App\Form\Trait\WithSubmitButton;
 use App\Form\Trait\WithTimestamps;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -29,7 +30,7 @@ class CharacterType extends AbstractEntityType {
 
     protected function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('rare', options: ['required' => false])
+            ->add('rare', ChoiceType::class, options: ['choices' => ["No" => false, "Yes" => true]])
             ->add('element', EntityType::class, [
                 'class' => Element::class,
                 'choice_label' => 'name',
