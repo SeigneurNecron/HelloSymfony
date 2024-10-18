@@ -29,7 +29,7 @@ class CharacterType extends AbstractEntityType {
 
     protected function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('rare')
+            ->add('rare', options: ['required' => false])
             ->add('element', EntityType::class, [
                 'class' => Element::class,
                 'choice_label' => 'id',
