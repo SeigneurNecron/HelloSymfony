@@ -13,10 +13,10 @@ trait WithTimestamps {
     #[BuildFormMethod]
     protected function buildFormWithTimestamps(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->addEventListener(FormEvents::POST_SUBMIT, $this->postSubmitWithTimestamps(...));
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->preSubmitWithTimestamps(...));
     }
 
-    private function postSubmitWithTimestamps(PreSubmitEvent $event): void {
+    private function preSubmitWithTimestamps(PreSubmitEvent $event): void {
         $data = $event->getData();
 
         if(empty($data['id'])) {
