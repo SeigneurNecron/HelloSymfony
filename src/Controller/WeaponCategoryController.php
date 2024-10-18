@@ -17,8 +17,4 @@ class WeaponCategoryController extends AbstractCreatableEntityController {
         parent::__construct(WeaponCategory::class, WeaponCategoryType::class, $repository);
     }
 
-    protected function newEntity(): WeaponCategory {
-        return new WeaponCategory();
-    }
-
 }

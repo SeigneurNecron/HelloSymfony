@@ -17,8 +17,4 @@ class CharactersController extends AbstractCreatableEntityController {
         parent::__construct(Character::class, CharacterType::class, $repository);
     }
 
-    protected function newEntity(): Character {
-        return new Character();
-    }
-
 }

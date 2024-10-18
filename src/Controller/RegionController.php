@@ -17,8 +17,4 @@ class RegionController extends AbstractCreatableEntityController {
         parent::__construct(Region::class, RegionType::class, $repository);
     }
 
-    protected function newEntity(): Region {
-        return new Region();
-    }
-
 }

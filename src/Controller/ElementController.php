@@ -17,8 +17,4 @@ class ElementController extends AbstractCreatableEntityController {
         parent::__construct(Element::class, ElementType::class, $repository);
     }
 
-    protected function newEntity(): Element {
-        return new Element();
-    }
-
 }

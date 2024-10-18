@@ -37,7 +37,9 @@ abstract class AbstractEntityController extends AbstractController {
     /**
      * @return E
      */
-    protected abstract function newEntity();
+    protected function newEntity() {
+        return new $this->entityClass();
+    }
 
     protected function find(int $id): object {
         return $this->repository->find($id);
