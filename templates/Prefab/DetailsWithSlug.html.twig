@@ -1,10 +1,5 @@
 {% extends 'Prefab/Details.html.twig' %}
 
 {% block entityCommonDetails %}
-    <tr>
-        <td>
-            <label>slug :</label>
-            <label>{{ entity.slug }}</label>
-        </td>
-    </tr>
+    {% include 'Include/BasicRow.html.twig' with {'field': 'slug'} %}
 {% endblock %}

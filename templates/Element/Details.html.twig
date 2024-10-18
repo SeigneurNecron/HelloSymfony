@@ -1,10 +1,5 @@
 {% extends 'Prefab/DetailsWithSlug.html.twig' %}
 
 {% block entityDetails %}
-    <tr>
-        <td>
-            <label>color :</label>
-            <label>{{ entity.color }}</label>
-        </td>
-    </tr>
+    {% include 'Include/BasicRow.html.twig' with {'field': 'color'} %}
 {% endblock %}
