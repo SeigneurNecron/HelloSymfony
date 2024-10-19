@@ -10,6 +10,8 @@ class AppExtension extends AbstractExtension {
     public function getFilters(): array {
         return [
             new TwigFilter('simpleName', [AppRuntime::class, 'getSimpleName']),
+            new TwigFilter('mixedToString', [AppRuntime::class, 'mixedToString']),
+            new TwigFilter('objectToString', [AppRuntime::class, 'objectToString']),
         ];
     }
 
