@@ -1,15 +1,18 @@
 {% extends 'Base.html.twig' %}
 
 {% set titleStr = entity.name %}
-{% set typeClass = type|replace({' ': ''}) %}
+{% set detailsFields = detailsFields|default([]) %}
 
 {% block body %}
     <table>
-        {% block entityCommonDetails %}
-        {% endblock %}
-        {% block entityDetails %}
-        {% endblock %}
+        {% for detailsField in detailsFields %}
+            {% include 'Include/DetailsRow.html.twig' with {'field': detailsField} %}
+        {% else %}
+            No data found
+        {% endfor %}
     </table>
+
+    {% set typeClass = type|replace({' ': ''}) %}
 
     <nav>
         <ul>

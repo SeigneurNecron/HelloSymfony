@@ -1,5 +1,3 @@
 {% extends 'Prefab/Details.html.twig' %}
 
-{% block entityCommonDetails %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'slug'} %}
-{% endblock %}
+{% set detailsFields = ['slug']|merge(detailsFields|default([])) %}

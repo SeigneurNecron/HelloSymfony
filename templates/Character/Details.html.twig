@@ -1,12 +1,3 @@
 {% extends 'Prefab/DetailsWithSlug.html.twig' %}
 
-{% block entityDetails %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'rare'} %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'element'} %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'weaponCategory'} %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'region'} %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'genre'} %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'size'} %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'releaseDate'} %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'version'} %}
-{% endblock %}
+{% set detailsFields = ['rare', 'element', 'weaponCategory', 'region', 'genre', 'size', 'releaseDate', 'version'] %}

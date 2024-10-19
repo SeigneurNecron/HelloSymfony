@@ -1,0 +1,8 @@
+<tr>
+    <td>
+        <div>{% block rowLabel %}{{ field|u.snake|replace({'_': ' '})|capitalize }}:{% endblock %}</div>
+    </td>
+    <td>
+        <div>{% block rowValue %}{{ attribute(entity, field)|mixedToString }}{% endblock %}</div>
+    </td>
+</tr>

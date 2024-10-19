@@ -1,5 +1,3 @@
 {% extends 'Prefab/DetailsWithSlug.html.twig' %}
 
-{% block entityDetails %}
-    {% include 'Include/BasicRow.html.twig' with {'field': 'color'} %}
-{% endblock %}
+{% set detailsFields = ['color'] %}
