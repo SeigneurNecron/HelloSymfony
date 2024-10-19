@@ -29,26 +29,28 @@ class CharacterType extends AbstractEntityType {
 
     protected function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('rare', ChoiceType::class, options: ['choices' => ["No" => false, "Yes" => true]])
-            ->add('element', EntityType::class, [
+            ->add('rare', ChoiceType::class, options: [
+                'choices' => ["No" => false, "Yes" => true]
+            ])
+            ->add('element', EntityType::class, options: [
                 'class' => Element::class,
                 'choice_label' => 'name',
             ])
-            ->add('weaponCategory', EntityType::class, [
+            ->add('weaponCategory', EntityType::class, options: [
                 'class' => WeaponCategory::class,
                 'choice_label' => 'name',
             ])
-            ->add('region', EntityType::class, [
+            ->add('region', EntityType::class, options: [
                 'class' => Region::class,
                 'choice_label' => 'name',
             ])
-            ->add('genre', EnumType::class, [
+            ->add('genre', EnumType::class, options: [
                 'class' => Genre::class,
             ])
-            ->add('size', EnumType::class, [
+            ->add('size', EnumType::class, options: [
                 'class' => Size::class,
             ])
-            ->add('releaseDate', null, [
+            ->add('releaseDate', options: [
                 'widget' => 'single_text',
             ])
             ->add('version');

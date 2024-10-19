@@ -13,8 +13,12 @@ trait WithName {
     #[BuildFormMethod]
     protected function buildFormWithName(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('name', options: ['attr' => ['autofocus' => true]])
-            ->add('slug', options: ['required' => false])
+            ->add('name', options: [
+                'attr' => ['autofocus' => true]
+            ])
+            ->add('slug', options: [
+                'required' => false
+            ])
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->preSubmitWithName(...));
     }
 

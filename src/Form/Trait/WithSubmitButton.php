@@ -13,7 +13,9 @@ trait WithSubmitButton {
     #[BuildFormMethod(atTheEnd: true)]
     protected function buildFormWithSubmitButton(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('submitButton', SubmitType::class, ['label' => $options['submitButtonLabel']]);
+            ->add('submitButton', SubmitType::class, options: [
+                'label' => $options['submitButtonLabel']
+            ]);
     }
 
     #[ConfigureOptionsMethod]

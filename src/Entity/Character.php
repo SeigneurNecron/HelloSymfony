@@ -43,8 +43,9 @@ class Character extends AbstractNamedEntity {
     #[Assert\NotBlank(message: "Please select the character's region.")]
     private ?Region $region = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Please enter the game version during which the character was released.")]
+    #[Assert\Regex(pattern: "/^\d+.\d+$/", message: "Version number should look like this: X.Y (with X and Y being integers)")]
     private ?string $version = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
