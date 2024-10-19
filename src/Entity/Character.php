@@ -15,14 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: '`character`')]
 class Character extends AbstractNamedEntity {
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    #[Assert\NotBlank(message: "Creation date is missing.")]
-    private ?DateTimeImmutable $dateCreated = null;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    #[Assert\NotBlank(message: "Last modification date is missing.")]
-    private ?DateTimeImmutable $dateModified = null;
-
     #[ORM\Column]
     #[Assert\Type('bool')]
     #[Assert\NotNull(message: "Please indicate if the character is rare.")]
@@ -51,33 +43,13 @@ class Character extends AbstractNamedEntity {
     #[Assert\NotBlank(message: "Please select the character's region.")]
     private ?Region $region = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2)]
     #[Assert\NotBlank(message: "Please enter the game version during which the character was released.")]
     private ?string $version = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotBlank(message: "Please enter the character's release date.")]
     private ?DateTimeImmutable $releaseDate = null;
-
-    public function getDateCreated(): ?DateTimeImmutable {
-        return $this->dateCreated;
-    }
-
-    public function setDateCreated(DateTimeImmutable $dateCreated): static {
-        $this->dateCreated = $dateCreated;
-
-        return $this;
-    }
-
-    public function getDateModified(): ?DateTimeImmutable {
-        return $this->dateModified;
-    }
-
-    public function setDateModified(DateTimeImmutable $dateModified): static {
-        $this->dateModified = $dateModified;
-
-        return $this;
-    }
 
     public function isRare(): ?bool {
         return $this->rare;

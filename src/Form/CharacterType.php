@@ -11,7 +11,6 @@ use App\Enum\Size;
 use App\Form\Base\AbstractEntityType;
 use App\Form\Trait\WithName;
 use App\Form\Trait\WithSubmitButton;
-use App\Form\Trait\WithTimestamps;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -22,7 +21,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CharacterType extends AbstractEntityType {
 
-    use WithName, WithTimestamps, WithSubmitButton;
+    use WithName, WithSubmitButton;
 
     public function __construct() {
         parent::__construct(Character::class);
