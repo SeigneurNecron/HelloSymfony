@@ -6,7 +6,7 @@ use App\Entity\Base\AbstractNamedEntity;
 use App\Enum\Genre;
 use App\Enum\Size;
 use App\Repository\CharacterRepository;
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,11 +17,11 @@ class Character extends AbstractNamedEntity {
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Assert\NotBlank(message: "Creation date is missing.")]
-    private ?DateTimeInterface $dateCreated = null;
+    private ?DateTimeImmutable $dateCreated = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Assert\NotBlank(message: "Last modification date is missing.")]
-    private ?DateTimeInterface $dateModified = null;
+    private ?DateTimeImmutable $dateModified = null;
 
     #[ORM\Column]
     #[Assert\Type('bool')]
@@ -57,23 +57,23 @@ class Character extends AbstractNamedEntity {
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotBlank(message: "Please enter the character's release date.")]
-    private ?DateTimeInterface $releaseDate = null;
+    private ?DateTimeImmutable $releaseDate = null;
 
-    public function getDateCreated(): ?DateTimeInterface {
+    public function getDateCreated(): ?DateTimeImmutable {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(DateTimeInterface $dateCreated): static {
+    public function setDateCreated(DateTimeImmutable $dateCreated): static {
         $this->dateCreated = $dateCreated;
 
         return $this;
     }
 
-    public function getDateModified(): ?DateTimeInterface {
+    public function getDateModified(): ?DateTimeImmutable {
         return $this->dateModified;
     }
 
-    public function setDateModified(DateTimeInterface $dateModified): static {
+    public function setDateModified(DateTimeImmutable $dateModified): static {
         $this->dateModified = $dateModified;
 
         return $this;
@@ -149,11 +149,11 @@ class Character extends AbstractNamedEntity {
         return $this;
     }
 
-    public function getReleaseDate(): ?DateTimeInterface {
+    public function getReleaseDate(): ?DateTimeImmutable {
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(DateTimeInterface $releaseDate): static {
+    public function setReleaseDate(DateTimeImmutable $releaseDate): static {
         $this->releaseDate = $releaseDate;
 
         return $this;
