@@ -2,16 +2,15 @@
 
 {% set new = entity.id is null %}
 {% set titleStr = (new ? 'Create' : 'Edit') ~ ' ' ~ type %}
-{% set typeClass = type|replace({' ': ''}) %}
 
 {% block body %}
     {{ form(form) }}
 
     <nav>
         <ul>
-            <li><a href="{{ path(typeClass ~ '_List') }}" title="Back to list">Back to list</a></li>
+            <li><a href="{{ path(type ~ '_List') }}" title="Back to list">Back to list</a></li>
             {% if not new %}
-                <li><a href="{{ path(typeClass ~ '_Details', {'id': entity.id}) }}" title="Back to details">Back to details</a></li>
+                <li><a href="{{ path(type ~ '_Details', {'slug': entity.slug}) }}" title="Back to details">Back to details</a></li>
             {% endif %}
         </ul>
     </nav>

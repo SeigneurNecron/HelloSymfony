@@ -3,13 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\WeaponCategory;
-use App\Repository\Base\AbstractEntityRepository;
+use App\Repository\Base\AbstractNamedEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends AbstractEntityRepository<WeaponCategory>
+ * @extends AbstractNamedEntityRepository<WeaponCategory>
  */
-class WeaponCategoryRepository extends AbstractEntityRepository {
+class WeaponCategoryRepository extends AbstractNamedEntityRepository {
 
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, WeaponCategory::class);

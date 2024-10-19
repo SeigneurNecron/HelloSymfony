@@ -1,22 +1,21 @@
 {% extends 'Base.html.twig' %}
 
 {% set titleStr = type ~ ' List' %}
-{% set typeClass = type|replace({' ': ''}) %}
 
-{% block bodyTitle %}{{ parent() }} ({{ entities|length }}){% endblock %}
+{% block bodyTitle %}{{ titleStr }} ({{ entities|length }}){% endblock %}
 
 {% block body %}
     {# TODO check user is authorized to create #}
     <nav>
         <ul>
-            <li><a href="{{ path(typeClass ~ '_Create') }}" title="Add {{ typeClass }}">Add {{ typeClass }}</a></li>
+            <li><a href="{{ path(type ~ '_Create') }}" title="Add {{ type }}">Add {{ type }}</a></li>
         </ul>
     </nav>
 
     <section>
         <ul>
             {% for entity in entities %}
-                <li><a href="{{ path(typeClass ~ '_Details', {'id': entity.id}) }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
+                <li><a href="{{ path(type ~ '_Details', {'slug': entity.slug}) }}" title="{{ entity.name }}">{{ entity.name }}</a></li>
             {% endfor %}
         </ul>
     </section>

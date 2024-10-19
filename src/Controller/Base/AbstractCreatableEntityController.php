@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Controller\Base;
 
-use App\Repository\Base\AbstractEntityRepository;
+use App\Repository\Base\AbstractNameableEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 abstract class AbstractCreatableEntityController extends AbstractEntityController {
 
-    protected function __construct(string $entityClass, string $formClass, AbstractEntityRepository $repository) {
+    protected function __construct(string $entityClass, string $formClass, AbstractNameableEntityRepository $repository) {
         parent::__construct($entityClass, $formClass, $repository);
     }
 
