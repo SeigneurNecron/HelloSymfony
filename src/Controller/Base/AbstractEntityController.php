@@ -51,13 +51,13 @@ abstract class AbstractEntityController extends AbstractController {
         return $this->render('Prefab/List.html.twig', ['type' => $this->entityName, 'entities' => $entities]);
     }
 
-    #[Route(path: '/{slug}/Details', name: 'Details')]
+    #[Route(path: '/{slug}/Details', name: 'Details', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function details(string $slug): Response {
         $entity = $this->find($slug);
         return $this->render($this->entityName . '/Details.html.twig', ['type' => $this->entityName, 'entity' => $entity]);
     }
 
-    #[Route(path: '/{slug}/Edit', name: 'Edit')]
+    #[Route(path: '/{slug}/Edit', name: 'Edit', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function edit(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
         $entity = $this->find($slug);
         $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Update"]);
