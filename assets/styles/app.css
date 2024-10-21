@@ -1,14 +1,7 @@
 body {
-    background: linear-gradient(#000000, #132135);
-    background-attachment: fixed;
+    background: linear-gradient(#000000, #132135) fixed;
     color: #EEE;
-    font-family: 'Crimson Text', serif;
-}
-
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 5px;
+    font-family: serif;
 }
 
 a {
@@ -16,53 +9,17 @@ a {
     text-decoration: none;
 }
 
+a.current,
 a:hover {
-    color: #BC956B;
-}
-
-img {
-    max-width: 100%;
-}
-
-body > .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-header img {
-    height: 70px;
-}
-
-main {
-    flex: 1;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    padding-left: 0;
+    color: goldenrod;
 }
 
 nav li {
     margin-right: 1rem;
 }
 
-label {
-    display: block;
-}
-
-input,
-textarea,
-select {
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-    width: 150px;
-    max-width: 50%;
-}
-
 .flash {
-    padding: 20px;
+    padding: 10px;
     font-weight: bold;
     font-size: 1.4rem;
     margin: 1rem 0;
