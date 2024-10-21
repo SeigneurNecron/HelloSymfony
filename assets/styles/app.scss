@@ -1,22 +1,21 @@
+@use "~bootstrap/scss/bootstrap";
+
 body {
     background: linear-gradient(#000000, #132135) fixed;
-    color: #EEE;
     font-family: serif;
 }
 
-a {
+.navbar-link {
     color: inherit;
-    text-decoration: none;
-}
-
-a.current,
-a:hover {
-    color: goldenrod;
-}
-
-nav li {
     margin-right: 1rem;
+    text-decoration: none;
+
+    &.state-currentRoute,
+    &:hover {
+        color: goldenrod;
+    }
 }
+
 
 .flash {
     padding: 10px;
