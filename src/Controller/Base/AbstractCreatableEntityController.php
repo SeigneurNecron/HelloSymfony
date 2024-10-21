@@ -32,11 +32,11 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
             if($form->isValid()) {
                 $entityManager->persist($entity);
                 $entityManager->flush();
-                $this->addFlash('success', $this->entityName . " created!");
+                $this->addFlash('success', "$this->entityName \"{$entity->getName()}\" created!");
                 return $this->redirectToRoute($this->entityName . '_Create');
             }
             else {
-                $this->addFlash('error', $this->entityName . " creation failed!");
+                $this->addFlash('error', "$this->entityName creation failed!");
             }
         }
 

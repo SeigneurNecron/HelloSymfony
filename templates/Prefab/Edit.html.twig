@@ -8,9 +8,10 @@
 
     <nav>
         <ul>
-            <li><a href="{{ path(type ~ '_List') }}" title="Back to list">Back to list</a></li>
+            <li><a class="btn" href="{{ path(type ~ '_List') }}" title="List">list</a></li>
             {% if not new %}
-                <li><a href="{{ path(type ~ '_Details', {'slug': entity.slug}) }}" title="Back to details">Back to details</a></li>
+                {# TODO - maybe use a hidden field or something to save the original slug (before edition) so we can return to the correct page #}
+                <li><a href="{{ path(type ~ '_Details', {'slug': entity.slug}) }}" title="Details">Details</a></li>
             {% endif %}
         </ul>
     </nav>

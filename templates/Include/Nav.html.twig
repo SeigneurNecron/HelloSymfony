@@ -1,9 +1,19 @@
-<nav>
-    <ul>
-        <li><a href="{{ path('Main_Home') }}" title="Home">Home</a></li>
-        <li><a href="{{ path('Character_List') }}" title="Characters">Characters</a></li>
-        <li><a href="{{ path('Element_List') }}" title="Elements">Elements</a></li>
-        <li><a href="{{ path('WeaponCategory_List') }}" title="Weapon Categories">Weapon Categories</a></li>
-        <li><a href="{{ path('Region_List') }}" title="Regions">Regions</a></li>
-    </ul>
+<nav class="navbar bg-primary navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('Main_Home') }}" title="Hello Symfony">Hello Symfony</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                {% set navItems = [
+                    {path: 'Main_Home', title: 'Home'},
+                    {path: 'Character_List', title: 'Characters'},
+                    {path: 'Element_List', title: 'Elements'},
+                    {path: 'WeaponCategory_List', title: 'Weapon Categories'},
+                    {path: 'Region_List', title: 'Regions'},
+                ] %}
+                {% for navItem in navItems %}
+                    {% include 'Include/NavItem.html.twig' with {'navItem': navItem} %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </nav>

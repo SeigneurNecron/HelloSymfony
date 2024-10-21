@@ -1,0 +1,3 @@
+<li class="nav-item">
+    <a class="navbar-link {{ app.current_route starts with (navItem.path|split('_')[0]) ? 'current' : '' }}" href="{{ path(navItem.path) }}" title="{{ navItem.title }}">{{ navItem.title }}</a>
+</li>

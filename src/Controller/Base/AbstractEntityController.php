@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Controller\Base;
 
-use App\Entity\Base\AbstractNamedEntity;
+use App\Entity\Base\AbstractNameableEntity;
 use App\Form\Base\AbstractEntityType;
 use App\Repository\Base\AbstractNameableEntityRepository;
 use App\Utils\StringUtils;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * @template E of AbstractNamedEntity
+ * @template E of AbstractNameableEntity
  * @template F of AbstractEntityType<E>
  * @template R of AbstractNameableEntityRepository<E>
  */
@@ -41,8 +41,28 @@ abstract class AbstractEntityController extends AbstractController {
         return new $this->entityClass();
     }
 
-    protected function find(string $slug): object {
+    /**
+     * @param string $slug
+     * @return E|null
+     */
+    protected function find(string $slug): ?AbstractNameableEntity {
         return $this->repository->findOneBySlug($slug);
+    }
+
+    /**
+     * @param string $slug
+     * @param callable<E> $treatment
+     * @return Response
+     */
+    protected function findAndUseEntity(string $slug, callable $treatment): Response {
+        $entity = $this->find($slug);
+
+        if(!$entity) {
+            $this->addFlash('error', "Could not find $this->entityName \"$slug\", return to list!");
+            return $this->redirectToRoute($this->entityName . '_List');
+        }
+
+        return $treatment($entity);
     }
 
     #[Route(path: '', name: 'List')]
@@ -53,23 +73,51 @@ abstract class AbstractEntityController extends AbstractController {
 
     #[Route(path: '/{slug}/Details', name: 'Details', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function details(string $slug): Response {
-        $entity = $this->find($slug);
-        return $this->render($this->entityName . '/Details.html.twig', ['type' => $this->entityName, 'entity' => $entity]);
+        return $this->findAndUseEntity($slug, function(AbstractNameableEntity $entity) {
+            return $this->render($this->entityName . '/Details.html.twig', ['type' => $this->entityName, 'entity' => $entity]);
+        });
     }
 
     #[Route(path: '/{slug}/Edit', name: 'Edit', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function edit(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
-        $entity = $this->find($slug);
-        $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Update"]);
-        $form->handleRequest($request);
+        return $this->findAndUseEntity($slug, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
+            $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Update"]);
+            $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-            $this->addFlash('success', $this->entityName . " updated!");
-            return $this->redirectToRoute($this->entityName . '_Details', ['slug' => $entity->getSlug()]);
-        }
+            if($form->isSubmitted()) {
+                if($form->isValid()) {
+                    $entityManager->flush();
+                    $this->addFlash('success', "$this->entityName \"{$entity->getName()}\" updated!");
+                    return $this->redirectToRoute($this->entityName . '_Details', ['slug' => $entity->getSlug()]);
+                }
+                else {
+                    $this->addFlash('error', "$this->entityName update failed!");
+                }
+            }
 
-        return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+            return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+        });
+    }
+
+    #[Route(path: '/{slug}/Delete', name: 'Delete', requirements: ['slug' => '[a-zA-Z0-9]+'])]
+    public function delete(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
+        return $this->findAndUseEntity($slug, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
+            $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Update"]);
+            $form->handleRequest($request);
+
+            if($form->isSubmitted()) {
+                if($form->isValid()) {
+                    $entityManager->flush();
+                    $this->addFlash('success', "$this->entityName \"{$entity->getName()}\" deleted!");
+                    return $this->redirectToRoute($this->entityName . '_List');
+                }
+                else {
+                    $this->addFlash('error', "$this->entityName deletion failed!");
+                }
+            }
+
+            return $this->render('Prefab/Delete.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+        });
     }
 
 }

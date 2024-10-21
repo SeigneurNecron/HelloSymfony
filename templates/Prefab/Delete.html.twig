@@ -1,0 +1,15 @@
+{% extends 'Base.html.twig' %}
+
+{% set titleStr = 'Delete ' ~ type %}
+
+{% block body %}
+    {{ form(form) }}
+
+    <nav>
+        <ul>
+            <li><a href="{{ path(type ~ '_List') }}" title="List">List</a></li>
+            <li><a href="{{ path(type ~ '_Details', {'slug': entity.slug}) }}" title="Details">Details</a></li>
+        </ul>
+    </nav>
+{% endblock %}
+

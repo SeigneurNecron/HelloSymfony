@@ -14,7 +14,7 @@
 
     <nav>
         <ul>
-            <li><a href="{{ path(type ~ '_List') }}" title="Back to list">Back to list</a></li>
+            <li><a href="{{ path(type ~ '_List') }}" title="List">List</a></li>
             {# TODO check user is authorized to edit #}
             <li><a href="{{ path(type ~ '_Edit', {'slug': entity.slug}) }}" title="Edit">Edit</a></li>
         </ul>

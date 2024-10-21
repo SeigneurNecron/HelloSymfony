@@ -6,11 +6,9 @@
 
 {% block body %}
     {# TODO check user is authorized to create #}
-    <nav>
-        <ul>
-            <li><a href="{{ path(type ~ '_Create') }}" title="Add {{ type }}">Add {{ type }}</a></li>
-        </ul>
-    </nav>
+    <div class="btn-group-sm">
+        <a class="btn-sm" href="{{ path(type ~ '_Create') }}" title="Add {{ type }}">Add {{ type }}</a>
+    </div>
 
     <section>
         <ul>
