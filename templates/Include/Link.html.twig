@@ -1,0 +1,5 @@
+{% set link = {tooltip: link.title, routeParams: {}}|merge(link) %}
+
+{% if app.current_route is not same as link.route %}
+    <a href="{{ path(link.route, link.routeParams) }}" title="{{ link.tooltip }}">{{ link.title }}</a>
+{% endif %}

@@ -16,6 +16,12 @@ body {
     }
 }
 
+table.bg-transparent tr {
+    td, th {
+        background-color: rgba(0 0 0 / 0) !important;
+    }
+}
+
 .flash {
     padding: 10px;
     font-weight: bold;

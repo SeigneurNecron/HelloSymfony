@@ -22,11 +22,19 @@
 
     <div class="container my-4">
         <header>
+            <table>
+                <tr>
+                    <td>
+                        <h2 class="mb-1">{% block bodyTitle %}{{ titleStr }}{% endblock %}</h2>
+                    </td>
+                    <td>
+                        <div class="mx-2">{% block bodyTitleMenu %}{% endblock %}</div>
+                    </td>
+                </tr>
+            </table>
         </header>
 
         <main>
-            <h2>{% block bodyTitle %}{{ titleStr }}{% endblock %}</h2>
-
             {% block body %}{% endblock %}
         </main>
 

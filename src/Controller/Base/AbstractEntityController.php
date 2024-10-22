@@ -6,6 +6,7 @@ namespace App\Controller\Base;
 
 use App\Entity\Base\AbstractNameableEntity;
 use App\Form\Base\AbstractEntityType;
+use App\Form\Base\EntityDeletionType;
 use App\Repository\Base\AbstractNameableEntityRepository;
 use App\Utils\StringUtils;
 use Doctrine\ORM\EntityManagerInterface;
@@ -71,7 +72,7 @@ abstract class AbstractEntityController extends AbstractController {
         return $this->render('Prefab/List.html.twig', ['type' => $this->entityName, 'entities' => $entities]);
     }
 
-    #[Route(path: '/{slug}/Details', name: 'Details', requirements: ['slug' => '[a-zA-Z0-9]+'])]
+    #[Route(path: '/{slug}', name: 'Details', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function details(string $slug): Response {
         return $this->findAndUseEntity($slug, function(AbstractNameableEntity $entity) {
             return $this->render($this->entityName . '/Details.html.twig', ['type' => $this->entityName, 'entity' => $entity]);
@@ -102,11 +103,12 @@ abstract class AbstractEntityController extends AbstractController {
     #[Route(path: '/{slug}/Delete', name: 'Delete', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function delete(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
         return $this->findAndUseEntity($slug, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
-            $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Update"]);
+            $form = $this->createForm(EntityDeletionType::class);
             $form->handleRequest($request);
 
             if($form->isSubmitted()) {
                 if($form->isValid()) {
+//                    $entityManager->remove($entity);
                     $entityManager->flush();
                     $this->addFlash('success', "$this->entityName \"{$entity->getName()}\" deleted!");
                     return $this->redirectToRoute($this->entityName . '_List');

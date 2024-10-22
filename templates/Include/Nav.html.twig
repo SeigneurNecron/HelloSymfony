@@ -4,11 +4,11 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
                 {% set navItems = [
-                    {path: 'Main_Home', title: 'Home'},
-                    {path: 'Character_List', title: 'Characters'},
-                    {path: 'Element_List', title: 'Elements'},
-                    {path: 'WeaponCategory_List', title: 'Weapon Categories'},
-                    {path: 'Region_List', title: 'Regions'},
+                    {route: 'Main_Home', title: 'Home'},
+                    {route: 'Character_List', title: 'Characters'},
+                    {route: 'Element_List', title: 'Elements'},
+                    {route: 'WeaponCategory_List', title: 'Weapon Categories'},
+                    {route: 'Region_List', title: 'Regions'},
                 ] %}
                 {% for navItem in navItems %}
                     {% include 'Include/NavItem.html.twig' with {'navItem': navItem} %}

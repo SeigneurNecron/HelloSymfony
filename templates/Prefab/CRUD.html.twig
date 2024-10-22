@@ -1,0 +1,19 @@
+{% extends 'Base.html.twig' %}
+
+{% block bodyTitleMenu %}
+    {% set buttons = [
+        {route: type ~ '_List', title: 'List'},
+    ] %}
+
+    {% if entity.id is not null %}
+        {% set buttons = buttons|merge([
+            {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: 'Details'},
+            {route: type ~ '_Edit', routeParams: {'slug': entity.slug}, title: 'Edit'},
+            {route: type ~ '_Delete', routeParams: {'slug': entity.slug}, title: 'Delete', style: 'btn-danger'},
+        ]) %}
+    {% endif %}
+
+    {% for button in buttons %}
+        {% include 'Include/Button.html.twig' with {'button': button} %}
+    {% endfor %}
+{% endblock %}

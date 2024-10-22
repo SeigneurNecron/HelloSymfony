@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-abstract class EntityDeletionType extends AbstractType {
+class EntityDeletionType extends AbstractType {
 
     public final function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
@@ -15,7 +15,7 @@ abstract class EntityDeletionType extends AbstractType {
                 'required' => true
             ])
             ->add('submitButton', SubmitType::class, options: [
-                'label' => ['Delete']
+                'label' => 'Delete'
             ]);
     }
 
