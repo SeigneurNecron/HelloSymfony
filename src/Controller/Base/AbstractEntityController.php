@@ -122,4 +122,6 @@ abstract class AbstractEntityController extends AbstractController {
         });
     }
 
+    // TODO check user is authorized to access edit/create/delete routes. Also don't display buttons that lead there.
+
 }

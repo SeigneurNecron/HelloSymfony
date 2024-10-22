@@ -5,7 +5,6 @@
 {% block bodyTitle %}{{ titleStr }} ({{ entities|length }}){% endblock %}
 
 {% block bodyTitleMenu %}
-    {# TODO check user is authorized to create #}
     {% include 'Include/Button.html.twig' with {'button': {route: type ~ '_Create', title: "Add " ~ type}} %}
 {% endblock %}
 
