@@ -1,8 +1,19 @@
 <tr>
     <td>
-        <div>{% block rowLabel %}{{ field|u.snake|replace({'_': ' '})|capitalize }}:{% endblock %}</div>
+        <div>
+            {{ field|u.snake|replace({'_': ' '})|capitalize }}:
+        </div>
     </td>
     <td>
-        <div>{% block rowValue %}{{ attribute(entity, field)|mixedToString }}{% endblock %}</div>
+        <div>
+            {% with %}
+                {% set fieldValue = attribute(entity, field) %}
+                {% if fieldValue|isNameableEntity %}
+                    {% include 'Include/Link.html.twig' with {'link': {route: fieldValue|classSimpleName ~ '_Details', routeParams: {'slug': fieldValue.slug}, title: fieldValue.name}} %}
+                {% else %}
+                    {{ fieldValue|mixedToString }}
+                {% endif %}
+            {% endwith %}
+        </div>
     </td>
 </tr>

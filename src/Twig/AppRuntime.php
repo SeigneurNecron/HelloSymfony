@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\Base\AbstractNameableEntity;
 use App\Utils\StringUtils;
 use BackedEnum;
 use DateTimeInterface;
@@ -52,7 +53,7 @@ class AppRuntime implements RuntimeExtensionInterface {
         elseif($object instanceof DateTimeInterface) {
             $date = $object->format('Y-m-d');
             $time = $object->format('H:i:s');
-            
+
             if($time == '00:00:00') {
                 return $date;
             }
@@ -62,6 +63,10 @@ class AppRuntime implements RuntimeExtensionInterface {
 
         $class = StringUtils::getClassSimpleName($object);
         return "[$class]";
+    }
+
+    public function isNameableEntity(mixed $thing): bool {
+        return $thing instanceof AbstractNameableEntity;
     }
 
 }

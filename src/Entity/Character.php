@@ -28,17 +28,17 @@ class Character extends AbstractNamedEntity {
     #[Assert\NotBlank(message: "Please select the character's size.")]
     private ?Size $size = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: "Please select the character's element.")]
     private ?Element $element = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: "Please select the character's weapon category.")]
     private ?WeaponCategory $weaponCategory = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: "Please select the character's region.")]
     private ?Region $region = null;
