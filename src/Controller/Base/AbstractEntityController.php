@@ -29,9 +29,11 @@ abstract class AbstractEntityController extends AbstractController {
      * @param class-string<F> $formClass
      * @param R $repository
      */
-    protected function __construct(protected readonly string                           $entityClass,
-                                   protected readonly string                           $formClass,
-                                   protected readonly AbstractNameableEntityRepository $repository) {
+    protected function __construct(
+        protected readonly string                           $entityClass,
+        protected readonly string                           $formClass,
+        protected readonly AbstractNameableEntityRepository $repository
+    ) {
         $this->entityName = StringUtils::getSimpleName($entityClass);
     }
 

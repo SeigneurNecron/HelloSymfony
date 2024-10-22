@@ -18,8 +18,9 @@ abstract class AbstractEntityType extends AbstractType {
     /**
      * @param class-string<E> $entityClass
      */
-    protected function __construct(protected readonly string $entityClass) {
-    }
+    protected function __construct(
+        protected readonly string $entityClass
+    ) {}
 
     public final function buildForm(FormBuilderInterface $builder, array $options): void {
         $buildMethods = Reflect::getMethodsAndAttribute($this, BuildFormMethod::class);
