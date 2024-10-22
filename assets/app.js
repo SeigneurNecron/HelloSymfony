@@ -7,3 +7,6 @@ import './bootstrap.js';
  */
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
+
+const imagesContext = require.context('./images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
+imagesContext.keys().forEach(imagesContext);
