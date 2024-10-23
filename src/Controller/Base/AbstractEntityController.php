@@ -6,7 +6,7 @@ namespace App\Controller\Base;
 
 use App\Entity\Base\AbstractNameableEntity;
 use App\Form\Base\AbstractEntityType;
-use App\Form\Base\EntityDeletionType;
+use App\Form\EntityDeletionType;
 use App\Repository\Base\AbstractNameableEntityRepository;
 use App\Utils\StringUtils;
 use Doctrine\ORM\EntityManagerInterface;
