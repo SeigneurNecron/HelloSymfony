@@ -23,7 +23,3 @@ yarn-error.log
 ###> IntelliJ ###
 /.idea/
 ###< IntelliJ ###
-
-###< Mailpit ###
-/bin/mailpit.exe
-###> Mailpit ###
