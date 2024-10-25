@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Special;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
-class EntityDeletionType extends AbstractType {
+class LogInType extends AbstractType {
 
     public final function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
@@ -19,7 +19,7 @@ class EntityDeletionType extends AbstractType {
                 ],
             ])
             ->add('submitButton', SubmitType::class, options: [
-                'label' => "Delete"
+                'label' => "Log In",
             ]);
     }
 

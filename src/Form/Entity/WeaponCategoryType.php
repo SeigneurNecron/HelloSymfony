@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Entity;
 
 use App\Entity\WeaponCategory;
 use App\Form\Base\AbstractEntityType;
