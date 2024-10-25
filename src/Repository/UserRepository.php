@@ -5,14 +5,16 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface {
+class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface {
 
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, User::class);
@@ -31,14 +33,30 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function findOneByUserNameOrEmail(string $userNameOrEmail): ?User {
+    public function findOneByUsernameOrEmail(string $username, string $email): ?User {
         return $this->createQueryBuilder('u')
-            ->where('u.username = :userNameOrEmail')
-            ->orWhere('u.email = :userNameOrEmail')
-            ->setParameter('userNameOrEmail', $userNameOrEmail)
+            ->where('u.username = :username')
+            ->orWhere('u.email = :email')
+            ->setParameter('username', $username)
+            ->setParameter('email', $email)
             ->setMaxResults(1)
             ->getQuery()
             ->getSingleResult();
+    }
+
+    public function findOneByIdentifier(string $identifier): ?User {
+        //dd('Got called, hurray!'); // TODO TMP
+        return $this->createQueryBuilder('u')
+            ->where('u.username = :userNameOrEmail')
+            ->orWhere('u.email = :userNameOrEmail')
+            ->setParameter('userNameOrEmail', $identifier)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function loadUserByIdentifier(string $identifier): ?UserInterface {
+        return $this->findOneByIdentifier($identifier);
     }
 
 }
