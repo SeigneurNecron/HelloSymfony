@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Controller\Base\AbstractCreatableEntityController;
 use App\Entity\Character;
-use App\Form\CharacterType;
+use App\Form\Entity\CharacterType;
 use App\Repository\CharacterRepository;
 use Symfony\Component\Routing\Attribute\Route;
 

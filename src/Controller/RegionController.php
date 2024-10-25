@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Controller\Base\AbstractCreatableEntityController;
 use App\Entity\Region;
-use App\Form\RegionType;
+use App\Form\Entity\RegionType;
 use App\Repository\RegionRepository;
 use Symfony\Component\Routing\Attribute\Route;
 

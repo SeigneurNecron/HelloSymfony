@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Controller\Base\AbstractCreatableEntityController;
 use App\Entity\Element;
-use App\Form\ElementType;
+use App\Form\Entity\ElementType;
 use App\Repository\ElementRepository;
 use Symfony\Component\Routing\Attribute\Route;
 

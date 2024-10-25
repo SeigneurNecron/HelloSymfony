@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Controller\Base\AbstractCreatableEntityController;
 use App\Entity\WeaponCategory;
-use App\Form\WeaponCategoryType;
+use App\Form\Entity\WeaponCategoryType;
 use App\Repository\WeaponCategoryRepository;
 use Symfony\Component\Routing\Attribute\Route;
 
