@@ -1,0 +1,7 @@
+{% extends '/Base.html.twig' %}
+
+{% set titleStr = 'Dev Secret Page' %}
+
+{% block body %}
+    {% include '/Include/Button.html.twig' with {'button': {route: 'Dev_FirstAdmin', title: "Create First Admin"}} %}
+{% endblock %}
