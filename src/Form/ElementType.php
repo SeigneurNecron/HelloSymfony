@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Element;
 use App\Form\Base\AbstractEntityType;
 use App\Form\Trait\WithName;
-use App\Form\Trait\WithSubmitButton;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -13,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ElementType extends AbstractEntityType {
 
-    use WithName, WithSubmitButton;
+    use WithName;
 
     public function __construct() {
         parent::__construct(Element::class);
