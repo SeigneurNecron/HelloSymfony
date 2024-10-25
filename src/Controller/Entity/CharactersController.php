@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Controller;
+namespace App\Controller\Entity;
 
 use App\Controller\Base\AbstractCreatableEntityController;
 use App\Entity\Character;
