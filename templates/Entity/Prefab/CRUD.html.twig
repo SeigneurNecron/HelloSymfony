@@ -1,4 +1,4 @@
-{% extends 'Base.html.twig' %}
+{% extends '/Base.html.twig' %}
 
 {% block bodyTitleMenu %}
     {% set buttons = [
@@ -14,6 +14,6 @@
     {% endif %}
 
     {% for button in buttons %}
-        {% include 'Include/Button.html.twig' with {'button': button} %}
+        {% include '/Include/Button.html.twig' with {'button': button} %}
     {% endfor %}
 {% endblock %}

@@ -71,13 +71,13 @@ abstract class AbstractEntityController extends AbstractController {
     #[Route(path: '', name: 'List')]
     public function list(): Response {
         $entities = $this->repository->findBy([], ['name' => 'ASC']);
-        return $this->render('Prefab/List.html.twig', ['type' => $this->entityName, 'entities' => $entities]);
+        return $this->render('Entity/Prefab/List.html.twig', ['type' => $this->entityName, 'entities' => $entities]);
     }
 
     #[Route(path: '/{slug}', name: 'Details', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function details(string $slug): Response {
         return $this->findAndUseEntity($slug, function(AbstractNameableEntity $entity) {
-            return $this->render($this->entityName . '/Details.html.twig', ['type' => $this->entityName, 'entity' => $entity]);
+            return $this->render('Entity/Details/' . $this->entityName . '.html.twig', ['type' => $this->entityName, 'entity' => $entity]);
         });
     }
 
@@ -98,7 +98,7 @@ abstract class AbstractEntityController extends AbstractController {
                 }
             }
 
-            return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+            return $this->render('Entity/Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
         });
     }
 
@@ -120,7 +120,7 @@ abstract class AbstractEntityController extends AbstractController {
                 }
             }
 
-            return $this->render('Prefab/Delete.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+            return $this->render('Entity/Prefab/Delete.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
         });
     }
 

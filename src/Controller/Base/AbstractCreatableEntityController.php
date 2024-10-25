@@ -40,7 +40,7 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
             }
         }
 
-        return $this->render('Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+        return $this->render('Entity/Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
     }
 
 }

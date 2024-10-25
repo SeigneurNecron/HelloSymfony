@@ -1,11 +1,11 @@
-{% extends 'Base.html.twig' %}
+{% extends '/Base.html.twig' %}
 
 {% set titleStr = type ~ ' List' %}
 
 {% block bodyTitle %}{{ titleStr }} ({{ entities|length }}){% endblock %}
 
 {% block bodyTitleMenu %}
-    {% include 'Include/Button.html.twig' with {'button': {route: type ~ '_Create', title: "Add " ~ type}} %}
+    {% include '/Include/Button.html.twig' with {'button': {route: type ~ '_Create', title: "Add " ~ type}} %}
 {% endblock %}
 
 {% block body %}
@@ -20,7 +20,7 @@
         {% for entity in entities %}
             <tr>
                 <td>
-                    {% include 'Include/Link.html.twig' with {'link': {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: entity.name}} %}
+                    {% include '/Include/Link.html.twig' with {'link': {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: entity.name}} %}
                 </td>
                 <td>
                     {% set buttons = [
@@ -29,7 +29,7 @@
                         {route: type ~ '_Delete', routeParams: {'slug': entity.slug}, title: 'Delete', style: 'btn-danger'},
                     ] %}
                     {% for button in buttons %}
-                        {% include 'Include/Button.html.twig' with {'button': button} %}
+                        {% include '/Include/Button.html.twig' with {'button': button} %}
                     {% endfor %}
                 </td>
             </tr>

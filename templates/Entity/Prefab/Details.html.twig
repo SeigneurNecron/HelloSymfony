@@ -1,4 +1,4 @@
-{% extends 'Prefab/CRUD.html.twig' %}
+{% extends '/Entity/Prefab/CRUD.html.twig' %}
 
 {% set titleStr = entity.name %}
 {% set detailsFields = detailsFields|default([]) %}
@@ -6,7 +6,7 @@
 {% block body %}
     <table>
         {% for detailsField in detailsFields %}
-            {% include 'Include/DetailsRow.html.twig' with {'field': detailsField} %}
+            {% include '/Include/DetailsRow.html.twig' with {'field': detailsField} %}
         {% else %}
             No data found
         {% endfor %}
