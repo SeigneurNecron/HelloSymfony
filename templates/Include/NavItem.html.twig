@@ -1,6 +1,4 @@
-{% set navItem = {tooltip: navItem.title}|merge(navItem) %}
+{% set navItem = {tooltip: navItem.title, style: ''}|merge(navItem) %}
 
-<li class="nav-item">
-    <a class="navbar-link {{ app.current_route starts with (navItem.route|split('_')[0]) ? 'state-currentRoute' : '' }}"
-       href="{{ path(navItem.route) }}" title="{{ navItem.tooltip }}">{{ navItem.title }}</a>
-</li>
+<a class="navbar-link {{ app.current_route starts with (navItem.route|split('_')[0]) ? 'state-currentRoute' : '' }} {{ navItem.style }}"
+   href="{{ path(navItem.route) }}" title="{{ navItem.tooltip }}">{{ navItem.title }}</a>

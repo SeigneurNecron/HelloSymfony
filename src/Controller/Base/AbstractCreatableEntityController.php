@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use const App\Utils\ERROR;
+use const App\Utils\SUCCESS;
 
 /**
  * @template E
@@ -32,11 +34,11 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
             if($form->isValid()) {
                 $entityManager->persist($entity);
                 $entityManager->flush();
-                $this->addFlash('success', "$this->entityName \"{$entity->getName()}\" created!");
+                $this->addFlash(SUCCESS, "$this->entityName \"{$entity->getName()}\" created!");
                 return $this->redirectToRoute($this->entityName . '_Create');
             }
             else {
-                $this->addFlash('error', "$this->entityName creation failed!");
+                $this->addFlash(ERROR, "$this->entityName creation failed!");
             }
         }
 

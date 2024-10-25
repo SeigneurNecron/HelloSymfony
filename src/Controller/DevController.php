@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use const App\Utils\ERROR;
+use const App\Utils\SUCCESS;
 
 #[Route(path: '/Dev', name: 'Dev_', condition: "env('APP_ENV') === 'dev'")]
 class DevController extends AbstractController {
@@ -52,16 +54,16 @@ class DevController extends AbstractController {
                     $entityManager->persist($user);
                     $entityManager->flush();
 
-                    $this->addFlash('success', "Default admin created!");
+                    $this->addFlash(SUCCESS, "Default admin created!");
                     return $this->redirectToRoute('Dev_Home');
                 }
                 catch(Exception $e) {
-                    $this->addFlash('error', $e->getMessage());
+                    $this->addFlash(ERROR, $e->getMessage());
                     return $this->redirectToRoute('Dev_FirstAdmin');
                 }
             }
             else {
-                $this->addFlash('error', "Form validation failed!");
+                $this->addFlash(ERROR, "Form validation failed!");
             }
         }
 

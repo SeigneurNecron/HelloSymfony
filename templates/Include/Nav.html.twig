@@ -4,17 +4,28 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
                 {% set navItems = [
-                    {route: 'Main_Home', title: 'Home'},
-                    {route: 'Character_List', title: 'Characters'},
-                    {route: 'Element_List', title: 'Elements'},
-                    {route: 'WeaponCategory_List', title: 'Weapon Categories'},
-                    {route: 'Region_List', title: 'Regions'},
-                    {route: 'Dev_Home', title: 'Dev'},
+                    {route: 'Main_Home', title: "Home"},
+                    {route: 'Character_List', title: "Characters"},
+                    {route: 'Element_List', title: "Elements"},
+                    {route: 'WeaponCategory_List', title: "Weapon Categories"},
+                    {route: 'Region_List', title: "Regions"},
+                    {route: 'Dev_Home', title: "Dev"},
                 ] %}
                 {% for navItem in navItems %}
-                    {% include 'Include/NavItem.html.twig' with {'navItem': navItem} %}
+                    <li class="nav-item">
+                        {% include 'Include/NavItem.html.twig' with {'navItem': navItem} %}
+                    </li>
                 {% endfor %}
             </ul>
+
+            <div class="ms-auto">
+                {% if app.user %}
+                    {{ app.user.userIdentifier }}
+                    {% include 'Include/NavItem.html.twig' with {'navItem': {route: 'Security_Logout', title: "Log Out"}} %}
+                {% else %}
+                    {% include 'Include/NavItem.html.twig' with {'navItem': {route: 'Security_Login', title: "Log In"}} %}
+                {% endif %}
+            </div>
         </div>
     </div>
 </nav>
