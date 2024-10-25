@@ -38,6 +38,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[Assert\Email(message: "Please provide a valid email address.")]
     private ?string $email = null;
 
+    #[ORM\Column]
+    private bool $isVerified = false;
+
     public function __construct() {
         $this->roles = ['ROLE_USER'];
     }
@@ -105,6 +108,16 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 
     public function setEmail(string $email): static {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function isVerified(): bool {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
