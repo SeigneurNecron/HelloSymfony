@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Controller\Base;
 
+use App\Constants\MessageType as MT;
 use App\Entity\Base\AbstractNameableEntity;
 use App\Form\Base\AbstractEntityType;
 use App\Form\Entity\EntityDeletionType;
@@ -14,8 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use const App\Utils\ERROR;
-use const App\Utils\SUCCESS;
 
 /**
  * @template E of AbstractNameableEntity
@@ -63,7 +62,7 @@ abstract class AbstractEntityController extends AbstractController {
         $entity = $this->find($slug);
 
         if(!$entity) {
-            $this->addFlash(ERROR, "Could not find $this->entityName \"$slug\", return to list!");
+            $this->addFlash(MT::ERROR, "Could not find $this->entityName \"$slug\", return to list!");
             return $this->redirectToRoute($this->entityName . '_List');
         }
 
@@ -92,11 +91,11 @@ abstract class AbstractEntityController extends AbstractController {
             if($form->isSubmitted()) {
                 if($form->isValid()) {
                     $entityManager->flush();
-                    $this->addFlash(SUCCESS, "$this->entityName \"{$entity->getName()}\" updated!");
+                    $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" updated!");
                     return $this->redirectToRoute($this->entityName . '_Details', ['slug' => $entity->getSlug()]);
                 }
                 else {
-                    $this->addFlash(ERROR, "$this->entityName update failed!");
+                    $this->addFlash(MT::ERROR, "$this->entityName update failed!");
                 }
             }
 
@@ -114,11 +113,11 @@ abstract class AbstractEntityController extends AbstractController {
                 if($form->isValid()) {
 //                    $entityManager->remove($entity);
                     $entityManager->flush();
-                    $this->addFlash(SUCCESS, "$this->entityName \"{$entity->getName()}\" deleted!");
+                    $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" deleted!");
                     return $this->redirectToRoute($this->entityName . '_List');
                 }
                 else {
-                    $this->addFlash(ERROR, "$this->entityName deletion failed!");
+                    $this->addFlash(MT::ERROR, "$this->entityName deletion failed!");
                 }
             }
 

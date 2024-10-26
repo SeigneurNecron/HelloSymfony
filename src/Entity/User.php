@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constants\UserRole as UR;
 use App\Entity\Base\AbstractEntity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,10 +42,6 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\Column]
     private bool $isVerified = false;
 
-    public function __construct() {
-        $this->roles = ['ROLE_USER'];
-    }
-
     public function getUsername(): ?string {
         return $this->username;
     }
@@ -69,14 +66,16 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
      * @see UserInterface
      */
     public function getRoles(): array {
-        return $this->roles;
+        $roles = $this->roles;
+        $roles[] = UR::ROLE_USER;
+        return array_unique($roles);
     }
 
     /**
      * @param list<string> $roles
      */
     public function setRoles(array $roles): static {
-        $this->roles = array_unique($roles);
+        $this->roles = $roles;
 
         return $this;
     }

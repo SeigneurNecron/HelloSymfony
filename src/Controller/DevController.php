@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Constants\MessageType as MT;
+use App\Constants\UserRole as UR;
 use App\Entity\User;
 use App\Form\Special\CreateFirstAdminType;
 use App\Repository\UserRepository;
@@ -12,8 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use const App\Utils\ERROR;
-use const App\Utils\SUCCESS;
 
 #[Route(path: '/Dev', name: 'Dev_', condition: "env('APP_ENV') === 'dev'")]
 class DevController extends AbstractController {
@@ -49,21 +49,21 @@ class DevController extends AbstractController {
                     $user->setUsername($username)
                         ->setEmail($email)
                         ->setPassword($hasher->hashPassword($user, $password))
-                        ->setRoles(['ROLE_ADMIN'])
+                        ->setRoles([UR::ROLE_ADMIN])
                         ->setVerified(true);
                     $entityManager->persist($user);
                     $entityManager->flush();
 
-                    $this->addFlash(SUCCESS, "Default admin created!");
+                    $this->addFlash(MT::SUCCESS, "Default admin created!");
                     return $this->redirectToRoute('Dev_Home');
                 }
                 catch(Exception $e) {
-                    $this->addFlash(ERROR, $e->getMessage());
+                    $this->addFlash(MT::ERROR, $e->getMessage());
                     return $this->redirectToRoute('Dev_FirstAdmin');
                 }
             }
             else {
-                $this->addFlash(ERROR, "Form validation failed!");
+                $this->addFlash(MT::ERROR, "Form validation failed!");
             }
         }
 

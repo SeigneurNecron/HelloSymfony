@@ -4,13 +4,12 @@ declare(strict_types = 1);
 
 namespace App\Controller\Base;
 
+use App\Constants\MessageType as MT;
 use App\Repository\Base\AbstractNameableEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use const App\Utils\ERROR;
-use const App\Utils\SUCCESS;
 
 /**
  * @template E
@@ -34,11 +33,11 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
             if($form->isValid()) {
                 $entityManager->persist($entity);
                 $entityManager->flush();
-                $this->addFlash(SUCCESS, "$this->entityName \"{$entity->getName()}\" created!");
+                $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" created!");
                 return $this->redirectToRoute($this->entityName . '_Create');
             }
             else {
-                $this->addFlash(ERROR, "$this->entityName creation failed!");
+                $this->addFlash(MT::ERROR, "$this->entityName creation failed!");
             }
         }
 
