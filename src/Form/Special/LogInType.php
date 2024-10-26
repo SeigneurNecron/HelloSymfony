@@ -2,25 +2,40 @@
 
 namespace App\Form\Special;
 
-use Symfony\Component\Form\AbstractType;
+use App\Form\Base\AbstractCustomType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LogInType extends AbstractType {
+class LogInType extends AbstractCustomType {
 
-    public final function buildForm(FormBuilderInterface $builder, array $options): void {
+    public final function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('confirm', CheckboxType::class, options: [
-                'constraints' => [
-                    new IsTrue(['message' => "You need to confirm the deletion to proceed."
-                    ]),
+            ->add('username', TextType::class, options: [
+                'label' => "Username or email",
+                'attr' => [
+                    'autofocus' => true,
+                    'autocomplete' => 'username',
+                    'value' => $options['lastUsername'],
                 ],
             ])
-            ->add('submitButton', SubmitType::class, options: [
-                'label' => "Log In",
+            ->add('password', PasswordType::class, options: [
+                'label' => "Password",
+                'attr' => [
+                    'autocomplete' => 'current-password',
+                ],
+            ])
+            ->add('remember_me', CheckboxType::class, options: [
+                'label' => 'Remember me',
+                'required' => false,
             ]);
+    }
+
+    public function doConfigureOptions(OptionsResolver $resolver): void {
+        $resolver->setDefault('submitButtonLabel', 'Sign in');
+        $resolver->setDefault('lastUsername', '');
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\Special\LogInType;
 use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,13 +14,11 @@ class SecurityController extends AbstractController {
 
     #[Route(path: '/Login', name: 'Login')]
     public function login(AuthenticationUtils $authenticationUtils): Response {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        // last username entered by the user
+        $lastAuthError = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('Security/Login.html.twig', ['last_username' => $lastUsername, 'error' => $error,]);
+        $form = $this->createForm(LogInType::class, options: ['lastUsername' => $lastUsername]);
+        return $this->render('Security/Login.html.twig', ['form' => $form, 'lastAuthError' => $lastAuthError,]);
     }
 
     #[Route(path: '/Logout', name: 'Logout')]

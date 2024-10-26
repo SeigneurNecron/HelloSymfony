@@ -3,23 +3,14 @@
 {% set titleStr = "Log in" %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% if app.user %}
+        <p>You are already logged in as {{ app.user.userIdentifier }}.</p>
+        {% include 'Include/Button.html.twig' with {'button': {route: 'Security_Logout', title: "Log Out"}} %}
+    {% else %}
+        {% if lastAuthError %}
+            <div class="alert alert-danger">{{ lastAuthError.messageKey|trans(lastAuthError.messageData, 'security') }}</div>
         {% endif %}
 
-        <label for="username">Username</label>
-        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
-        <div class="checkbox mb-3">
-            <input type="checkbox" name="_remember_me" id="_remember_me">
-            <label for="_remember_me">Remember me</label>
-        </div>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-    </form>
+        {{ form(form) }}
+    {% endif %}
 {% endblock %}
