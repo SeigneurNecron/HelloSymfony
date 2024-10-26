@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Base\AbstractNamedEntity;
+use App\Entity\Base\AdminEntityCUD;
 use App\Enum\Genre;
 use App\Enum\Size;
 use App\Repository\CharacterRepository;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\Table(name: '`character`')]
-class Character extends AbstractNamedEntity {
+class Character extends AbstractNamedEntity implements AdminEntityCUD {
 
     #[ORM\Column]
     #[Assert\Type('bool')]

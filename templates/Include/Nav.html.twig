@@ -5,16 +5,18 @@
             <ul class="navbar-nav">
                 {% set navItems = [
                     {route: 'Main_Home', title: "Home"},
-                    {route: 'Character_List', title: "Characters"},
-                    {route: 'Element_List', title: "Elements"},
-                    {route: 'WeaponCategory_List', title: "Weapon Categories"},
-                    {route: 'Region_List', title: "Regions"},
+                    {route: 'Character_List', title: "Characters", class: 'Character'},
+                    {route: 'Element_List', title: "Elements", class: 'Element'},
+                    {route: 'WeaponCategory_List', title: "Weapon Categories", class: 'WeaponCategory'},
+                    {route: 'Region_List', title: "Regions", class: 'Region'},
                     {route: 'Dev_Home', title: "Dev"},
                 ] %}
                 {% for navItem in navItems %}
-                    <li class="nav-item">
-                        {% include 'Include/NavItem.html.twig' with {'navItem': navItem} %}
-                    </li>
+                    {% if (navItem.class is not defined) or is_granted(READ, navItem.class|FQN) %}
+                        <li class="nav-item">
+                            {% include 'Include/NavItem.html.twig' with {'navItem': navItem} %}
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
 

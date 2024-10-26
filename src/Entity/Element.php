@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Base\AbstractNamedEntity;
+use App\Entity\Base\AdminEntityCUD;
 use App\Repository\ElementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ElementRepository::class)]
-class Element extends AbstractNamedEntity {
+class Element extends AbstractNamedEntity implements AdminEntityCUD {
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Please provide a color.")]

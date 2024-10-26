@@ -5,7 +5,9 @@
 {% block bodyTitle %}{{ titleStr }} ({{ entities|length }}){% endblock %}
 
 {% block bodyTitleMenu %}
-    {% include '/Include/Button.html.twig' with {'button': {route: type ~ '_Create', title: "Add " ~ type}} %}
+    {% if is_granted(CREATE, type|FQN) %}
+        {% include '/Include/Button.html.twig' with {'button': {route: type ~ '_Create', title: "Add " ~ type}} %}
+    {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -24,12 +26,14 @@
                 </td>
                 <td>
                     {% set buttons = [
-                        {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: 'Details'},
-                        {route: type ~ '_Edit', routeParams: {'slug': entity.slug}, title: 'Edit'},
-                        {route: type ~ '_Delete', routeParams: {'slug': entity.slug}, title: 'Delete', style: 'btn-danger'},
+                        {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: 'Details', permission: READ},
+                        {route: type ~ '_Edit', routeParams: {'slug': entity.slug}, title: 'Edit', permission: UPDATE},
+                        {route: type ~ '_Delete', routeParams: {'slug': entity.slug}, title: 'Delete', style: 'btn-danger', permission: DELETE},
                     ] %}
                     {% for button in buttons %}
-                        {% include '/Include/Button.html.twig' with {'button': button} %}
+                        {% if is_granted(button.permission, type|FQN) %}
+                            {% include '/Include/Button.html.twig' with {'button': button} %}
+                        {% endif %}
                     {% endfor %}
                 </td>
             </tr>

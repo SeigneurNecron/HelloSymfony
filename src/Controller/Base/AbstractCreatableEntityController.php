@@ -4,7 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Controller\Base;
 
+use App\Constants\EntityPermission as EP;
 use App\Constants\MessageType as MT;
+use App\Entity\Base\AbstractNameableEntity;
+use App\Form\Entity\EntityDeletionType;
 use App\Repository\Base\AbstractNameableEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,23 +28,47 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
 
     #[Route(path: '/Create', name: 'Create')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response {
-        $entity = $this->newEntity();
-        $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Create"]);
-        $form->handleRequest($request);
+        return $this->checkPermissionAndDo(EP::CREATE, function() use ($request, $entityManager) {
+            $entity = $this->newEntity();
+            $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Create"]);
+            $form->handleRequest($request);
 
-        if($form->isSubmitted()) {
-            if($form->isValid()) {
-                $entityManager->persist($entity);
-                $entityManager->flush();
-                $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" created!");
-                return $this->redirectToRoute($this->entityName . '_Create');
+            if($form->isSubmitted()) {
+                if($form->isValid()) {
+                    $entityManager->persist($entity);
+                    $entityManager->flush();
+                    $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" created!");
+                    return $this->redirectToRoute($this->entityName . '_Create');
+                }
+                else {
+                    $this->addFlash(MT::ERROR, "$this->entityName creation failed!");
+                }
             }
-            else {
-                $this->addFlash(MT::ERROR, "$this->entityName creation failed!");
-            }
-        }
 
-        return $this->render('Entity/Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+            return $this->render('Entity/Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+        });
+    }
+
+    #[Route(path: '/{slug}/Delete', name: 'Delete', requirements: ['slug' => '[a-zA-Z0-9]+'])]
+    public function delete(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
+        return $this->checkPermissionFindEntityAndDo(EP::DELETE, $slug, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
+            $form = $this->createForm(EntityDeletionType::class);
+            $form->handleRequest($request);
+
+            if($form->isSubmitted()) {
+                if($form->isValid()) {
+//                    $entityManager->remove($entity);
+                    $entityManager->flush();
+                    $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" deleted!");
+                    return $this->redirectToRoute($this->entityName . '_List');
+                }
+                else {
+                    $this->addFlash(MT::ERROR, "$this->entityName deletion failed!");
+                }
+            }
+
+            return $this->render('Entity/Prefab/Delete.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+        });
     }
 
 }

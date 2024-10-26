@@ -3,6 +3,10 @@
 namespace App\Twig;
 
 use App\Entity\Base\AbstractNameableEntity;
+use App\Entity\Character;
+use App\Entity\Element;
+use App\Entity\Region;
+use App\Entity\WeaponCategory;
 use App\Utils\StringUtils;
 use BackedEnum;
 use DateTimeInterface;
@@ -12,8 +16,17 @@ use UnitEnum;
 
 class AppRuntime implements RuntimeExtensionInterface {
 
+    private readonly array $entityClasses;
+
     public function __construct() {
-        // Can use this constructor to inject services
+        $entityFQNs = [Character::class, Element::class, WeaponCategory::class, Region::class];
+        $entityClasses = [];
+
+        foreach($entityFQNs as $entityFQN) {
+            $entityClasses[$this->getSimpleName($entityFQN)] = $entityFQN;
+        }
+
+        $this->entityClasses = $entityClasses;
     }
 
     public function getSimpleName(string $className): string {
@@ -26,6 +39,10 @@ class AppRuntime implements RuntimeExtensionInterface {
 
     public function getClassSimpleName(object $object): string {
         return $object ? StringUtils::getClassSimpleName($object) : "null";
+    }
+
+    public function getFQN(string $classSimpleName): string {
+        return $this->entityClasses[$classSimpleName];
     }
 
     public function mixedToString(mixed $thing): string {
