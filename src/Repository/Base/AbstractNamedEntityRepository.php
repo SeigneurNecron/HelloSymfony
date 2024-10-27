@@ -3,6 +3,8 @@
 namespace App\Repository\Base;
 
 use App\Entity\Base\AbstractNamedEntity;
+use App\Utils\Reflect;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * @template E of AbstractNamedEntity
@@ -16,13 +18,17 @@ abstract class AbstractNamedEntityRepository extends AbstractNameableEntityRepos
      * @return E|null
      */
     public function findOneBySlug(string $slug, bool $withDetails): ?AbstractNamedEntity {
-        $builder = $this->createQueryBuilder('entity');
-
-        $builder->andWhere('entity.slug = :slug')
+        $builder = $this->createQueryBuilder('entity')
+            ->andWhere('entity.slug = :slug')
             ->setParameter('slug', $slug);
 
         if($withDetails) {
-            // TODO - pull referenced entities names and slugs at once.
+            $fields = Reflect::getFieldsWithAttribute($this->newEntity(), ManyToOne::class);
+
+            foreach($fields as $field) {
+                $builder->leftJoin("entity.$field", $field);
+                $builder->addSelect("$field");
+            }
         }
 
         return $builder->getQuery()->getOneOrNullResult();

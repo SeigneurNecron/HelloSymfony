@@ -12,12 +12,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 abstract class AbstractNameableEntityRepository extends ServiceEntityRepository {
 
+    protected readonly string $entityClass;
+
     /**
      * @param ManagerRegistry $registry
      * @param class-string<E> $entityClass
      */
     public function __construct(ManagerRegistry $registry, string $entityClass) {
         parent::__construct($registry, $entityClass);
+        $this->entityClass = $entityClass;
+    }
+
+    /**
+     * @return E
+     */
+    protected function newEntity() {
+        return new $this->entityClass();
     }
 
     /**
