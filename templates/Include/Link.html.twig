@@ -1,5 +1,19 @@
-{% set link = {tooltip: link.title, routeParams: {}}|merge(link) %}
+{% set linkInfo = {tooltip: linkInfo.title, routeParams: {}, allowSameRoute: false, showTextIfNotGranted: false, style: ''}|merge(linkInfo) %}
 
-{% if app.current_route is not same as link.route %}
-    <a href="{{ path(link.route, link.routeParams) }}" title="{{ link.tooltip }}">{{ link.title }}</a>
+{% if linkInfo.allowSameRoute or (app.current_route is not same as linkInfo.route) %}
+    {% if (linkInfo.permission is not defined) or (linkInfo.entityClass is not defined) or is_granted(linkInfo.permission, linkInfo.entityClass|FQN) %}
+        {% if debugPerm %}
+            {% with %}
+                {% set permDef = (linkInfo.permission is not defined) %}
+                {% set classDef = (linkInfo.entityClass is not defined) %}
+                {% if permDef or classDef %}
+                    {% set permString = (permDef and classDef) ? 'both?' : permDef ? 'perm?' : classDef ? 'class?' : '' %}
+                    <div class="bg-danger d-inline">{{ permString }}</div>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+        <a class="{% block linkStyle %}{{ linkInfo.style }}{% endblock %}" href="{{ path(linkInfo.route, linkInfo.routeParams) }}" title="{{ linkInfo.tooltip }}">{{ linkInfo.title }}</a>
+    {% elseif linkInfo.showTextIfNotGranted %}
+        {{ linkInfo.title }}
+    {% endif %}
 {% endif %}

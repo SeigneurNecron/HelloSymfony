@@ -47,10 +47,11 @@ abstract class AbstractEntityController extends AbstractController {
 
     /**
      * @param string $slug
+     * @param bool $withDetails
      * @return E|null
      */
-    protected function find(string $slug): ?AbstractNameableEntity {
-        return $this->repository->findOneBySlug($slug);
+    protected function find(string $slug, bool $withDetails): ?AbstractNameableEntity {
+        return $this->repository->findOneBySlug($slug, $withDetails);
     }
 
     /**
@@ -66,13 +67,14 @@ abstract class AbstractEntityController extends AbstractController {
     /**
      * @param string $permission
      * @param string $slug
+     * @param bool $withDetails
      * @param callable(E $entity):Response $treatment
      * @return Response
      */
-    protected function checkPermissionFindEntityAndDo(string $permission, string $slug, callable $treatment): Response {
+    protected function checkPermissionFindEntityAndDo(string $permission, string $slug, bool $withDetails, callable $treatment): Response {
         $this->denyAccessUnlessGranted($permission, $this->entityClass);
 
-        $entity = $this->find($slug);
+        $entity = $this->find($slug, $withDetails);
 
         if(!$entity) {
             $this->addFlash(MT::ERROR, "Could not find $this->entityName \"$slug\", return to list!");
@@ -84,7 +86,7 @@ abstract class AbstractEntityController extends AbstractController {
 
     #[Route(path: '', name: 'List')]
     public function list(): Response {
-        return $this->checkPermissionAndDo(EP::READ, function() {
+        return $this->checkPermissionAndDo(EP::LIST, function() {
             $entities = $this->repository->findBy([], ['name' => 'ASC']);
             return $this->render('Entity/Prefab/List.html.twig', ['type' => $this->entityName, 'entities' => $entities]);
         });
@@ -92,14 +94,14 @@ abstract class AbstractEntityController extends AbstractController {
 
     #[Route(path: '/{slug}', name: 'Details', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function details(string $slug): Response {
-        return $this->checkPermissionFindEntityAndDo(EP::READ, $slug, function(AbstractNameableEntity $entity) {
+        return $this->checkPermissionFindEntityAndDo(EP::READ, $slug, true, function(AbstractNameableEntity $entity) {
             return $this->render('Entity/Details/' . $this->entityName . '.html.twig', ['type' => $this->entityName, 'entity' => $entity]);
         });
     }
 
     #[Route(path: '/{slug}/Edit', name: 'Edit', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function edit(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
-        return $this->checkPermissionFindEntityAndDo(EP::UPDATE, $slug, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
+        return $this->checkPermissionFindEntityAndDo(EP::UPDATE, $slug, false, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
             $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Update"]);
             $form->handleRequest($request);
 

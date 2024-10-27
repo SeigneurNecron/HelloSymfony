@@ -5,9 +5,12 @@
 {% block bodyTitle %}{{ titleStr }} ({{ entities|length }}){% endblock %}
 
 {% block bodyTitleMenu %}
-    {% if is_granted(CREATE, type|FQN) %}
-        {% include '/Include/Button.html.twig' with {'button': {route: type ~ '_Create', title: "Add " ~ type}} %}
-    {% endif %}
+    {% include '/Include/Button.html.twig' with {'linkInfo': {
+        route: type ~ '_Create',
+        title: "Add " ~ type,
+        permission: CREATE,
+        entityClass: type,
+    }} %}
 {% endblock %}
 
 {% block body %}
@@ -22,18 +25,26 @@
         {% for entity in entities %}
             <tr>
                 <td>
-                    {% include '/Include/Link.html.twig' with {'link': {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: entity.name}} %}
+                    {% include '/Include/Link.html.twig' with {'linkInfo': {
+                        route: type ~ '_Details',
+                        routeParams: {'slug': entity.slug},
+                        title: entity.name,
+                        permission: READ,
+                        entityClass: type,
+                        showTextIfNotGranted: true,
+                    }} %}
                 </td>
                 <td>
-                    {% set buttons = [
-                        {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: 'Details', permission: READ},
-                        {route: type ~ '_Edit', routeParams: {'slug': entity.slug}, title: 'Edit', permission: UPDATE},
-                        {route: type ~ '_Delete', routeParams: {'slug': entity.slug}, title: 'Delete', style: 'btn-danger', permission: DELETE},
+                    {% set links = [
+                        {route: type ~ '_Details', title: 'Details', permission: READ},
+                        {route: type ~ '_Edit', title: 'Edit', permission: UPDATE},
+                        {route: type ~ '_Delete', title: 'Delete', permission: DELETE, style: 'btn-danger'},
                     ] %}
-                    {% for button in buttons %}
-                        {% if is_granted(button.permission, type|FQN) %}
-                            {% include '/Include/Button.html.twig' with {'button': button} %}
-                        {% endif %}
+                    {% for link in links %}
+                        {% include '/Include/Button.html.twig' with {'linkInfo': link|merge({
+                            routeParams: {'slug': entity.slug},
+                            entityClass: type,
+                        })} %}
                     {% endfor %}
                 </td>
             </tr>

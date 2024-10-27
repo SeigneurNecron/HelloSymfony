@@ -2,32 +2,40 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('Main_Home') }}" title="Hello Symfony">Hello Symfony</a>
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav">
-                {% set navItems = [
-                    {route: 'Main_Home', title: "Home"},
-                    {route: 'Character_List', title: "Characters", class: 'Character'},
-                    {route: 'Element_List', title: "Elements", class: 'Element'},
-                    {route: 'WeaponCategory_List', title: "Weapon Categories", class: 'WeaponCategory'},
-                    {route: 'Region_List', title: "Regions", class: 'Region'},
-                    {route: 'Dev_Home', title: "Dev"},
-                ] %}
-                {% for navItem in navItems %}
-                    {% if (navItem.class is not defined) or is_granted(READ, navItem.class|FQN) %}
-                        <li class="nav-item">
-                            {% include 'Include/NavItem.html.twig' with {'navItem': navItem} %}
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+            {% set links = [
+                {route: 'Main_Home', title: "Home"},
+                {route: 'Character_List', title: "Characters", entityClass: 'Character'},
+                {route: 'Element_List', title: "Elements", entityClass: 'Element'},
+                {route: 'WeaponCategory_List', title: "Weapon Categories", entityClass: 'WeaponCategory'},
+                {route: 'Region_List', title: "Regions", entityClass: 'Region'},
+            ] %}
 
-            <div class="ms-auto">
-                {% if app.user %}
-                    {{ app.user.userIdentifier }}
-                    {% include 'Include/NavItem.html.twig' with {'navItem': {route: 'Security_Logout', title: "Log Out"}} %}
-                {% else %}
-                    {% include 'Include/NavItem.html.twig' with {'navItem': {route: 'Security_Login', title: "Log In"}} %}
-                {% endif %}
-            </div>
+            {% if app.environment is same as 'dev' %}
+                {% set links = links|merge([
+                    {route: 'Dev_Home', title: "Dev"},
+                ]) %}
+            {% endif %}
+
+            {% for link in links %}
+                {% include 'Include/NavItem.html.twig' with {'linkInfo': link|merge({
+                    permission: LIST,
+                })} %}
+            {% endfor %}
+        </div>
+
+        <div>
+            {% if app.user %}
+                {{ app.user.userIdentifier ~ ' | ' }}
+                {% include 'Include/NavItem.html.twig' with {'linkInfo': {
+                    route: 'Security_Logout',
+                    title: "Log Out",
+                }} %}
+            {% else %}
+                {% include 'Include/NavItem.html.twig' with {'linkInfo': {
+                    route: 'Security_Login',
+                    title: "Log In",
+                }} %}
+            {% endif %}
         </div>
     </div>
 </nav>

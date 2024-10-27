@@ -51,13 +51,13 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
 
     #[Route(path: '/{slug}/Delete', name: 'Delete', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function delete(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
-        return $this->checkPermissionFindEntityAndDo(EP::DELETE, $slug, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
+        return $this->checkPermissionFindEntityAndDo(EP::DELETE, $slug, false, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
             $form = $this->createForm(EntityDeletionType::class);
             $form->handleRequest($request);
 
             if($form->isSubmitted()) {
                 if($form->isValid()) {
-//                    $entityManager->remove($entity);
+//                    $entityManager->remove($entity); // TODO manage entity deletion (need to check for references in other entities, display warnings and remove form)
                     $entityManager->flush();
                     $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" deleted!");
                     return $this->redirectToRoute($this->entityName . '_List');

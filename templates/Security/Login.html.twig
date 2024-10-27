@@ -5,7 +5,10 @@
 {% block body %}
     {% if app.user %}
         <p>You are already logged in as {{ app.user.userIdentifier }}.</p>
-        {% include 'Include/Button.html.twig' with {'button': {route: 'Security_Logout', title: "Log Out"}} %}
+        {% include 'Include/Button.html.twig' with {'linkInfo': {
+            route: 'Security_Logout',
+            title: "Log Out",
+        }} %}
     {% else %}
         {% if lastAuthError %}
             <div class="alert alert-danger">{{ lastAuthError.messageKey|trans(lastAuthError.messageData, 'security') }}</div>

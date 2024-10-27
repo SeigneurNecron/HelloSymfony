@@ -1,21 +1,22 @@
 {% extends '/Base.html.twig' %}
 
 {% block bodyTitleMenu %}
-    {% set buttons = [
+    {% set links = [
         {route: type ~ '_List', title: 'List', permission: READ},
     ] %}
 
     {% if entity.id is not null %}
-        {% set buttons = buttons|merge([
-            {route: type ~ '_Details', routeParams: {'slug': entity.slug}, title: 'Details', permission: READ},
-            {route: type ~ '_Edit', routeParams: {'slug': entity.slug}, title: 'Edit', permission: UPDATE},
-            {route: type ~ '_Delete', routeParams: {'slug': entity.slug}, title: 'Delete', style: 'btn-danger', permission: DELETE},
+        {% set links = links|merge([
+            {route: type ~ '_Details', title: 'Details', permission: READ},
+            {route: type ~ '_Edit', title: 'Edit', permission: UPDATE},
+            {route: type ~ '_Delete', title: 'Delete', permission: DELETE, style: 'btn-danger'},
         ]) %}
     {% endif %}
 
-    {% for button in buttons %}
-        {% if is_granted(button.permission, type|FQN) %}
-            {% include '/Include/Button.html.twig' with {'button': button} %}
-        {% endif %}
+    {% for link in links %}
+        {% include '/Include/Button.html.twig' with {'linkInfo': link|merge({
+            routeParams: {'slug': entity.slug},
+            entityClass: type,
+        })} %}
     {% endfor %}
 {% endblock %}

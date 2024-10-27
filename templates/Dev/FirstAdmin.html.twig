@@ -3,7 +3,10 @@
 {% set titleStr = 'Create First Admin' %}
 
 {% block bodyTitleMenu %}
-    {% include '/Include/Button.html.twig' with {'button': {route: 'Dev_Home', title: "Back"}} %}
+    {% include '/Include/Button.html.twig' with {'linkInfo': {
+        route: 'Dev_Home',
+        title: "Back",
+    }} %}
 {% endblock %}
 
 {% block body %}

@@ -22,8 +22,9 @@ abstract class AbstractNameableEntityRepository extends ServiceEntityRepository 
 
     /**
      * @param string $slug
+     * @param bool $withDetails
      * @return E|null
      */
-    public abstract function findOneBySlug(string $slug): ?AbstractNameableEntity;
+    public abstract function findOneBySlug(string $slug, bool $withDetails): ?AbstractNameableEntity;
 
 }

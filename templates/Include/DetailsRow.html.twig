@@ -9,7 +9,14 @@
             {% with %}
                 {% set fieldValue = attribute(entity, field) %}
                 {% if fieldValue|isNameableEntity %}
-                    {% include 'Include/Link.html.twig' with {'link': {route: fieldValue|classSimpleName ~ '_Details', routeParams: {'slug': fieldValue.slug}, title: fieldValue.name}} %}
+                    {% include 'Include/Link.html.twig' with {'linkInfo': {
+                        route: fieldValue|classSimpleName ~ '_Details',
+                        routeParams: {'slug': fieldValue.slug},
+                        title: fieldValue.name,
+                        permission: READ,
+                        entityClass: fieldValue|classSimpleName,
+                        showTextIfNotGranted: true,
+                    }} %}
                 {% else %}
                     {{ fieldValue|mixedToString }}
                 {% endif %}

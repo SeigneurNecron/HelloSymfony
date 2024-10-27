@@ -22,24 +22,24 @@ class CharacterRepository extends AbstractNamedEntityRepository {
      * @return Character[] Returns an array of Character objects
      */
     public function findByFields(Element $element, WeaponCategory $weaponCategory, Region $region): array {
-        $builder = $this->createQueryBuilder('c');
+        $builder = $this->createQueryBuilder('character');
 
         if(!$element === null) {
-            $builder->andWhere('c.element = :element')
+            $builder->andWhere('character.element = :element')
                 ->setParameter('element', $element);
         }
 
         if(!$weaponCategory === null) {
-            $builder->andWhere('c.weaponCategory = :weaponCategory')
+            $builder->andWhere('character.weaponCategory = :weaponCategory')
                 ->setParameter('weaponCategory', $weaponCategory);
         }
 
         if(!$region === null) {
-            $builder->andWhere('c.region = :region')
+            $builder->andWhere('character.region = :region')
                 ->setParameter('region', $region);
         }
 
-        return $builder->orderBy('c.name', 'ASC')
+        return $builder->orderBy('character.name', 'ASC')
             ->getQuery()
             ->getResult();
     }

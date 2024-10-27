@@ -1,4 +1,7 @@
-{% set navItem = {tooltip: navItem.title, style: ''}|merge(navItem) %}
+{% extends 'Include/Link.html.twig' %}
 
-<a class="navbar-link {{ app.current_route starts with (navItem.route|split('_')[0]) ? 'state-currentRoute' : '' }} {{ navItem.style }}"
-   href="{{ path(navItem.route) }}" title="{{ navItem.tooltip }}">{{ navItem.title }}</a>
+{% set linkInfo = {allowSameRoute: true}|merge(linkInfo) %}
+
+{% block linkStyle %}
+    navbar-link{{ app.current_route starts with (linkInfo.route|split('_')[0]) ? ' state-currentRoute' : '' }}{{ ' ' ~ parent() -}}
+{% endblock %}

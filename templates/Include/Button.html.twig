@@ -1,5 +1,7 @@
-{% set button = {tooltip: button.title, style: 'btn-primary', routeParams: {}}|merge(button) %}
+{% extends 'Include/Link.html.twig' %}
 
-{% if app.current_route is not same as button.route %}
-    <a class="btn btn-sm {{ button.style }}" href="{{ path(button.route, button.routeParams) }}" title="{{ button.tooltip }}">{{ button.title }}</a>
-{% endif %}
+{% set linkInfo = {style: 'btn-primary'}|merge(linkInfo) %}
+
+{% block linkStyle %}
+    btn btn-sm{{ ' ' ~ parent() -}}
+{% endblock %}
