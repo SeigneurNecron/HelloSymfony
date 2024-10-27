@@ -7,9 +7,11 @@ use App\Entity\Character;
 use App\Entity\Element;
 use App\Entity\Region;
 use App\Entity\WeaponCategory;
+use App\Utils\Reflect;
 use App\Utils\StringUtils;
 use BackedEnum;
 use DateTimeInterface;
+use Doctrine\ORM\Mapping\OneToMany;
 use Stringable;
 use Twig\Extension\RuntimeExtensionInterface;
 use UnitEnum;
@@ -84,6 +86,10 @@ class AppRuntime implements RuntimeExtensionInterface {
 
     public function isNameableEntity(mixed $thing): bool {
         return $thing instanceof AbstractNameableEntity;
+    }
+
+    public function getParentEntityFields(object $entity): array {
+        return Reflect::getFieldsWithAttribute($entity, OneToMany::class);
     }
 
 }

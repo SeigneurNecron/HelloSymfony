@@ -7,6 +7,7 @@ namespace App\Controller\Base;
 use App\Constants\EntityPermission as EP;
 use App\Constants\MessageType as MT;
 use App\Entity\Base\AbstractNameableEntity;
+use App\Enum\QueryMode;
 use App\Form\Entity\EntityDeletionType;
 use App\Repository\Base\AbstractNameableEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,7 +52,7 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
 
     #[Route(path: '/{slug}/Delete', name: 'Delete', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function delete(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
-        return $this->checkPermissionFindEntityAndDo(EP::DELETE, $slug, false, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
+        return $this->checkPermissionFindEntityAndDo(EP::DELETE, $slug, QueryMode::WithParents, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
             $form = $this->createForm(EntityDeletionType::class);
             $form->handleRequest($request);
 

@@ -3,8 +3,10 @@
 namespace App\Repository\Base;
 
 use App\Entity\Base\AbstractNamedEntity;
+use App\Enum\QueryMode;
 use App\Utils\Reflect;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @template E of AbstractNamedEntity
@@ -14,16 +16,17 @@ abstract class AbstractNamedEntityRepository extends AbstractNameableEntityRepos
 
     /**
      * @param string $slug
-     * @param bool $withDetails
+     * @param QueryMode $queryMode
      * @return E|null
      */
-    public function findOneBySlug(string $slug, bool $withDetails): ?AbstractNamedEntity {
+    public function findOneBySlug(string $slug, QueryMode $queryMode): ?AbstractNamedEntity {
         $builder = $this->createQueryBuilder('entity')
             ->andWhere('entity.slug = :slug')
             ->setParameter('slug', $slug);
 
-        if($withDetails) {
-            $fields = Reflect::getFieldsWithAttribute($this->newEntity(), ManyToOne::class);
+        if($queryMode !== QueryMode::Simple) {
+            $attributeClass = ($queryMode === QueryMode::WithChildren) ? ManyToOne::class : OneToMany::class;
+            $fields = Reflect::getFieldsWithAttribute($this->newEntity(), $attributeClass);
 
             foreach($fields as $field) {
                 $builder->leftJoin("entity.$field", $field);

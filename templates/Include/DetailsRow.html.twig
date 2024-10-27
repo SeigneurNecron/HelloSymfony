@@ -10,11 +10,11 @@
                 {% set fieldValue = attribute(entity, field) %}
                 {% if fieldValue|isNameableEntity %}
                     {% include 'Include/Link.html.twig' with {'linkInfo': {
-                        route: fieldValue|classSimpleName ~ '_Details',
+                        route: fieldValue|getClassSimpleName ~ '_Details',
                         routeParams: {'slug': fieldValue.slug},
                         title: fieldValue.name,
                         permission: READ,
-                        entityClass: fieldValue|classSimpleName,
+                        entityClass: fieldValue|getClassSimpleName,
                         showTextIfNotGranted: true,
                     }} %}
                 {% else %}

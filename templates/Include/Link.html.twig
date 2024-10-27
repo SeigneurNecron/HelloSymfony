@@ -1,7 +1,7 @@
 {% set linkInfo = {tooltip: linkInfo.title, routeParams: {}, allowSameRoute: false, showTextIfNotGranted: false, style: ''}|merge(linkInfo) %}
 
 {% if linkInfo.allowSameRoute or (app.current_route is not same as linkInfo.route) %}
-    {% if (linkInfo.permission is not defined) or (linkInfo.entityClass is not defined) or is_granted(linkInfo.permission, linkInfo.entityClass|FQN) %}
+    {% if (linkInfo.permission is not defined) or (linkInfo.entityClass is not defined) or is_granted(linkInfo.permission, linkInfo.entityClass|getFQN) %}
         {% if debugPerm %}
             {% with %}
                 {% set permDef = (linkInfo.permission is not defined) %}

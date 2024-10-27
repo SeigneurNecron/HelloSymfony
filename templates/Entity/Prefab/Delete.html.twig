@@ -3,6 +3,24 @@
 {% set titleStr = 'Delete ' ~ type %}
 
 {% block body %}
-    {{ form(form) }}
-{% endblock %}
+    {% set parentFields = entity|getParentEntityFields %}
+    {% set hasParents = false %}
 
+    {% for parentField in parentFields %}
+        {% set parents = attribute(entity, parentField) %}
+
+        {% if parents|length > 0 %}
+            {% set hasParents = true %}
+
+            {% for parent in parents %}
+                {# TODO display linked entities and if they can be cascade deleted or not #}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% if hasParents %}
+        <p>Can't delete {{ entity.name }}</p>
+    {% else %}
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

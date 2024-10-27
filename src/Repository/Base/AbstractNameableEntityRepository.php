@@ -3,6 +3,7 @@
 namespace App\Repository\Base;
 
 use App\Entity\Base\AbstractNameableEntity;
+use App\Enum\QueryMode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,9 +33,9 @@ abstract class AbstractNameableEntityRepository extends ServiceEntityRepository 
 
     /**
      * @param string $slug
-     * @param bool $withDetails
+     * @param QueryMode $queryMode
      * @return E|null
      */
-    public abstract function findOneBySlug(string $slug, bool $withDetails): ?AbstractNameableEntity;
+    public abstract function findOneBySlug(string $slug, QueryMode $queryMode): ?AbstractNameableEntity;
 
 }
