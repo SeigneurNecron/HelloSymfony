@@ -1,26 +1,29 @@
 {% extends '/Entity/Prefab/CRUD.html.twig' %}
 
-{% set titleStr = 'Delete ' ~ type %}
+{% set titleStr = 'Delete ' ~ type ~ ': ' ~ entity.name %}
 
 {% block body %}
-    {% set parentFields = entity|getParentEntityFields %}
-    {% set hasParents = false %}
 
-    {% for parentField in parentFields %}
-        {% set parents = attribute(entity, parentField) %}
+    {% include 'Include/ParentFieldsList.html.twig' with {'parentFieldsInfo': {
+        list: parentFields.emptyFields,
+        title: "These parent entities are not set, so there is no risk of cascade data loss:",
+        style: "alert alert-success",
+    }} %}
 
-        {% if parents|length > 0 %}
-            {% set hasParents = true %}
+    {% include 'Include/ParentFieldsList.html.twig' with {'parentFieldsInfo': {
+        list: parentFields.lockedFields,
+        title: "Can't delete " ~ entity.name ~ " because these parent entities can't be automatically deleted:",
+        style: "alert alert-warning",
+    }} %}
 
-            {% for parent in parents %}
-                {# TODO display linked entities and if they can be cascade deleted or not #}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
+    {% include 'Include/ParentFieldsList.html.twig' with {'parentFieldsInfo': {
+        list: parentFields.cascadeFields,
+        title: "Warning - these parent entities will be automatically deleted if you delete this one:",
+        style: "alert alert-danger",
+    }} %}
 
-    {% if hasParents %}
-        <p>Can't delete {{ entity.name }}</p>
-    {% else %}
+    {% if form is not null %}
+        <div class="alert alert-warning">You are about to delete {{ entity.name }}</div>
         {{ form(form) }}
     {% endif %}
 {% endblock %}

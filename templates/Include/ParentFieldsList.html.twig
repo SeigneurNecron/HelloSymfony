@@ -1,0 +1,26 @@
+{% set parentFieldsInfo = {style: 'alert alert-warning'}|merge(parentFieldsInfo) %}
+
+{% if parentFieldsInfo.list|length > 0 %}
+    <div class="{{ parentFieldsInfo.style }}">
+        <p>{{ parentFieldsInfo.title }}</p>
+        <ul>
+            {% for parentField in parentFieldsInfo.list %}
+                {% set parents = attribute(entity, parentField) %}
+                <li>
+                    {{ parentField ~ ' (' ~ parents|length ~ '): ' }}
+
+                    {% if parents|length > 0 %}
+                        {% if parents[0]|isNamedEntity %}
+                            {% for parent in parents %}
+                                {{ parent.name }}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            [No details]
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

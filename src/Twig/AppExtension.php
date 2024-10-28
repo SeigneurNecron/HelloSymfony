@@ -16,6 +16,7 @@ class AppExtension extends AbstractExtension {
             new TwigFilter('mixedToString', [AppRuntime::class, 'mixedToString']),
             new TwigFilter('objectToString', [AppRuntime::class, 'objectToString']),
             new TwigFilter('isNameableEntity', [AppRuntime::class, 'isNameableEntity']),
+            new TwigFilter('isNamedEntity', [AppRuntime::class, 'isNamedEntity']),
             new TwigFilter('getParentEntityFields', [AppRuntime::class, 'getParentEntityFields']),
         ];
     }

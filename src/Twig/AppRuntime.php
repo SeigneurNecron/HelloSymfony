@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Base\AbstractNameableEntity;
+use App\Entity\Base\AbstractNamedEntity;
 use App\Entity\Character;
 use App\Entity\Element;
 use App\Entity\Region;
@@ -86,6 +87,10 @@ class AppRuntime implements RuntimeExtensionInterface {
 
     public function isNameableEntity(mixed $thing): bool {
         return $thing instanceof AbstractNameableEntity;
+    }
+
+    public function isNamedEntity(mixed $thing): bool {
+        return $thing instanceof AbstractNamedEntity;
     }
 
     public function getParentEntityFields(object $entity): array {

@@ -6,11 +6,14 @@ namespace App\Controller\Base;
 
 use App\Constants\EntityPermission as EP;
 use App\Constants\MessageType as MT;
+use App\Entity\Base\AbstractEntity;
 use App\Entity\Base\AbstractNameableEntity;
 use App\Enum\QueryMode;
 use App\Form\Entity\EntityDeletionType;
 use App\Repository\Base\AbstractNameableEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -53,22 +56,55 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
     #[Route(path: '/{slug}/Delete', name: 'Delete', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function delete(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
         return $this->checkPermissionFindEntityAndDo(EP::DELETE, $slug, QueryMode::WithParents, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
-            $form = $this->createForm(EntityDeletionType::class);
-            $form->handleRequest($request);
+            $form = null;
+            $canDelete = true;
+            $emptyFields = [];
+            $lockedFields = [];
+            $cascadeFields = [];
 
-            if($form->isSubmitted()) {
-                if($form->isValid()) {
-//                    $entityManager->remove($entity); // TODO manage entity deletion (need to check for references in other entities, display warnings and remove form)
-                    $entityManager->flush();
-                    $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" deleted!");
-                    return $this->redirectToRoute($this->entityName . '_List');
+            /* @var OneToMany $attribute */
+            foreach($entity->getParentFields() as $parentField => $attribute) {
+                $getter = 'get' . ucfirst($parentField);
+
+                /* @var Collection<int, AbstractEntity> $parent */
+                $parent = $entity->$getter();
+
+                $count = $parent->count();
+
+                if($count > 0) {
+                    if($attribute->orphanRemoval) {
+                        $cascadeFields[] = $parentField;
+                    }
+                    else {
+                        $lockedFields[] = $parentField;
+                        $canDelete = false;
+                    }
                 }
                 else {
-                    $this->addFlash(MT::ERROR, "$this->entityName deletion failed!");
+                    $emptyFields[] = $parentField;
                 }
             }
 
-            return $this->render('Entity/Prefab/Delete.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
+            $parentFields = compact('lockedFields', 'cascadeFields', 'emptyFields');
+
+            if($canDelete) {
+                $form = $this->createForm(EntityDeletionType::class);
+                $form->handleRequest($request);
+
+                if($form->isSubmitted()) {
+                    if($form->isValid()) {
+                        $entityManager->remove($entity);
+                        $entityManager->flush();
+                        $this->addFlash(MT::SUCCESS, "$this->entityName \"{$entity->getName()}\" deleted!");
+                        return $this->redirectToRoute($this->entityName . '_List');
+                    }
+                    else {
+                        $this->addFlash(MT::ERROR, "$this->entityName deletion failed!");
+                    }
+                }
+            }
+
+            return $this->render('Entity/Prefab/Delete.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form, 'parentFields' => $parentFields]);
         });
     }
 

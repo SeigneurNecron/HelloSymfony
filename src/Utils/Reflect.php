@@ -66,7 +66,7 @@ class Reflect {
      * Returns an array of matching methods names as keys and Attribute instances as values.
      * @param object $object an instance of an object you want to find methods on.
      * @param string $attributeClass the FQN of an Attribute you want methods to have.
-     * @return array<string, object>
+     * @return array<string, ReflectionAttribute>
      */
     public static function getMethodsAndAttribute(object $object, string $attributeClass): array {
         return self::getMembersAndAttribute($object, self::METHODS, $attributeClass);
@@ -76,7 +76,7 @@ class Reflect {
      * Returns an array of matching fields names as keys and Attribute instances as values.
      * @param object $object an instance of an object you want to find fields on.
      * @param string $attributeClass the FQN of an Attribute you want fields to have.
-     * @return array<string, object>
+     * @return array<string, ReflectionAttribute>
      */
     public static function getFieldsAndAttribute(object $object, string $attributeClass): array {
         return self::getMembersAndAttribute($object, self::FIELDS, $attributeClass);

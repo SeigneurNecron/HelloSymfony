@@ -4,9 +4,6 @@ namespace App\Repository\Base;
 
 use App\Entity\Base\AbstractNamedEntity;
 use App\Enum\QueryMode;
-use App\Utils\Reflect;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @template E of AbstractNamedEntity
@@ -25,10 +22,10 @@ abstract class AbstractNamedEntityRepository extends AbstractNameableEntityRepos
             ->setParameter('slug', $slug);
 
         if($queryMode !== QueryMode::Simple) {
-            $attributeClass = ($queryMode === QueryMode::WithChildren) ? ManyToOne::class : OneToMany::class;
-            $fields = Reflect::getFieldsWithAttribute($this->newEntity(), $attributeClass);
+            $entity = $this->newEntity();
+            $fields = ($queryMode === QueryMode::WithChildren) ? $entity->getChildFields() : $entity->getParentFields();
 
-            foreach($fields as $field) {
+            foreach($fields as $field => $attribute) {
                 $builder->leftJoin("entity.$field", $field);
                 $builder->addSelect("$field");
             }
