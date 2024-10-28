@@ -16,4 +16,9 @@ class MainController extends AbstractController {
         return $this->render('Main/Home.html.twig');
     }
 
+    #[Route(path: '/ToS', name: 'ToS')]
+    public function tos(): Response {
+        return $this->render('Main/ToS.html.twig');
+    }
+
 }

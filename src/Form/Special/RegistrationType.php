@@ -10,11 +10,16 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationType extends AbstractCustomType {
+
+    public function __construct(
+        private readonly RouterInterface $router
+    ) {}
 
     public function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
@@ -43,6 +48,8 @@ class RegistrationType extends AbstractCustomType {
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, options: [
+                'label' => "I agree with the <a href=\"" . $this->router->generate('Main_ToS') . "\" title=\"terms and conditions\">terms and conditions</a>",
+                'label_html' => true,
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue(['message' => 'You should agree to our terms.']),
