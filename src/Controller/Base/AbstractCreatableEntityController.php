@@ -62,11 +62,11 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
             $lockedFields = [];
             $cascadeFields = [];
 
-            /* @var OneToMany $attribute */
+            /** @var OneToMany $attribute */
             foreach($entity->getParentFields() as $parentField => $attribute) {
                 $getter = 'get' . ucfirst($parentField);
 
-                /* @var Collection<int, AbstractEntity> $parent */
+                /** @var Collection<int, AbstractEntity> $parent */
                 $parent = $entity->$getter();
 
                 $count = $parent->count();

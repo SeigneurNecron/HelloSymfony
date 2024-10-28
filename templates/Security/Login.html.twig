@@ -15,5 +15,13 @@
         {% endif %}
 
         {{ form(form) }}
+
+        <div class="alert alert-primary">
+            No account yet? What are you waiting for!
+            {% include 'Include/Button.html.twig' with {'linkInfo': {
+                route: 'Registration_Register',
+                title: "Register",
+            }} %}
+        </div>
     {% endif %}
 {% endblock %}

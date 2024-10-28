@@ -15,7 +15,7 @@ class Reflect {
         $matchingMembers = [];
 
         foreach($reflection->$getMembersFunction() as $member) {
-            /* @var ReflectionAttribute[] $attributes */
+            /** @var ReflectionAttribute[] $attributes */
             $attributes = $member->getAttributes($attributeClass);
 
             if(count($attributes) > 0) {
@@ -51,7 +51,7 @@ class Reflect {
         $matchingMembers = [];
 
         foreach($reflection->$getMembersFunction() as $members) {
-            /* @var ReflectionAttribute[] $attributes */
+            /** @var ReflectionAttribute[] $attributes */
             $attributes = $members->getAttributes($attributeClass);
 
             if(count($attributes) > 0) {
