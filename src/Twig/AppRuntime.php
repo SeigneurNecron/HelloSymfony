@@ -4,10 +4,11 @@ namespace App\Twig;
 
 use App\Entity\Base\AbstractNameableEntity;
 use App\Entity\Base\AbstractNamedEntity;
-use App\Entity\Character;
-use App\Entity\Element;
-use App\Entity\Region;
-use App\Entity\WeaponCategory;
+use App\Entity\Final\Character;
+use App\Entity\Final\Element;
+use App\Entity\Final\Region;
+use App\Entity\Final\User;
+use App\Entity\Final\WeaponCategory;
 use App\Utils\Reflect;
 use App\Utils\StringUtils;
 use BackedEnum;
@@ -22,7 +23,7 @@ class AppRuntime implements RuntimeExtensionInterface {
     private readonly array $entityClasses;
 
     public function __construct() {
-        $entityFQNs = [Character::class, Element::class, WeaponCategory::class, Region::class];
+        $entityFQNs = [Character::class, Element::class, WeaponCategory::class, Region::class, User::class];
         $entityClasses = [];
 
         foreach($entityFQNs as $entityFQN) {

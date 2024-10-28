@@ -2,10 +2,10 @@
 
 namespace App\Form\Entity;
 
-use App\Entity\Character;
-use App\Entity\Element;
-use App\Entity\Region;
-use App\Entity\WeaponCategory;
+use App\Entity\Final\Character;
+use App\Entity\Final\Element;
+use App\Entity\Final\Region;
+use App\Entity\Final\WeaponCategory;
 use App\Enum\Genre;
 use App\Enum\Size;
 use App\Form\Base\AbstractEntityType;

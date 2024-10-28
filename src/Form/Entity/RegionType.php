@@ -2,7 +2,7 @@
 
 namespace App\Form\Entity;
 
-use App\Entity\Region;
+use App\Entity\Final\Region;
 use App\Form\Base\AbstractEntityType;
 use App\Form\Trait\WithName;
 

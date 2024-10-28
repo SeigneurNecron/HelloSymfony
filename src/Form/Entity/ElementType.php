@@ -2,7 +2,7 @@
 
 namespace App\Form\Entity;
 
-use App\Entity\Element;
+use App\Entity\Final\Element;
 use App\Form\Base\AbstractEntityType;
 use App\Form\Trait\WithName;
 use Symfony\Component\Form\FormBuilderInterface;

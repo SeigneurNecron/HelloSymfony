@@ -2,7 +2,7 @@
 
 namespace App\Form\Entity;
 
-use App\Entity\WeaponCategory;
+use App\Entity\Final\WeaponCategory;
 use App\Form\Base\AbstractEntityType;
 use App\Form\Trait\WithName;
 

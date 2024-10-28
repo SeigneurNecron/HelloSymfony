@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Controller\Entity;
 
 use App\Controller\Base\AbstractCreatableEntityController;
-use App\Entity\Character;
+use App\Entity\Final\Character;
 use App\Form\Entity\CharacterType;
-use App\Repository\CharacterRepository;
+use App\Repository\Final\CharacterRepository;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/Character', name: 'Character_')]

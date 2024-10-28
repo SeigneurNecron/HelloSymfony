@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Controller\Entity;
 
 use App\Controller\Base\AbstractCreatableEntityController;
-use App\Entity\WeaponCategory;
+use App\Entity\Final\WeaponCategory;
 use App\Form\Entity\WeaponCategoryType;
-use App\Repository\WeaponCategoryRepository;
+use App\Repository\Final\WeaponCategoryRepository;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/WeaponCategory', name: 'WeaponCategory_')]

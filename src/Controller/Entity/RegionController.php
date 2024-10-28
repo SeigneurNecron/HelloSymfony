@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Controller\Entity;
 
 use App\Controller\Base\AbstractCreatableEntityController;
-use App\Entity\Region;
+use App\Entity\Final\Region;
 use App\Form\Entity\RegionType;
-use App\Repository\RegionRepository;
+use App\Repository\Final\RegionRepository;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/Region', name: 'Region_')]

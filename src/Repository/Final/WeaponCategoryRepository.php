@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Final;
 
-use App\Entity\WeaponCategory;
+use App\Entity\Final\WeaponCategory;
 use App\Repository\Base\AbstractNamedEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

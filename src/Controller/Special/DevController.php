@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Special;
 
 use App\Constants\MessageType as MT;
 use App\Constants\UserRole as UR;
-use App\Entity\User;
+use App\Entity\Final\User;
 use App\Form\Special\CreateFirstAdminType;
-use App\Repository\UserRepository;
+use App\Repository\Final\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

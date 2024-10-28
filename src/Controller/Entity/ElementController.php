@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Controller\Entity;
 
 use App\Controller\Base\AbstractCreatableEntityController;
-use App\Entity\Element;
+use App\Entity\Final\Element;
 use App\Form\Entity\ElementType;
-use App\Repository\ElementRepository;
+use App\Repository\Final\ElementRepository;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/Element', name: 'Element_')]

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Final;
 
 use App\Entity\Base\AbstractNamedEntity;
 use App\Entity\Base\AdminEntityCUD;
 use App\Enum\Genre;
 use App\Enum\Size;
-use App\Repository\CharacterRepository;
+use App\Repository\Final\CharacterRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

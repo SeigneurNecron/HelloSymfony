@@ -7,7 +7,7 @@ use App\Constants\UserRole as UR;
 use App\Entity\Base\AdminEntityCUD;
 use App\Entity\Base\RestrictedAccessEntity;
 use App\Entity\Base\VerifiedMemberEntity;
-use App\Entity\User;
+use App\Entity\Final\User;
 use Exception;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;

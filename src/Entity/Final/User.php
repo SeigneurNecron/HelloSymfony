@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Final;
 
 use App\Constants\UserRole as UR;
 use App\Entity\Base\AbstractEntity;
-use App\Repository\UserRepository;
+use App\Repository\Final\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
