@@ -9,7 +9,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
-    
+
     // .copyFiles({
     //     from: './assets/images',
     //
@@ -71,7 +71,11 @@ Encore
     })
 
     // enables Sass/SCSS support
-    .enableSassLoader()
+    .enableSassLoader((options) => {
+        options.sassOptions = {
+            quietDeps: true, // disables warning from dependencies
+        }
+    })
 
 // uncomment if you use TypeScript
 //.enableTypeScriptLoader()

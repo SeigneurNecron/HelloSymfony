@@ -23,3 +23,5 @@ yarn-error.log
 ###> IntelliJ ###
 /.idea/
 ###< IntelliJ ###
+
+/.symfony.local.yaml
