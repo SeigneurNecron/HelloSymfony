@@ -3,7 +3,6 @@
 namespace App\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,7 +10,7 @@ use function Symfony\Component\String\u;
 
 #[UniqueEntity('name', message: "This name is already in use.")]
 #[UniqueEntity('slug', message: "This slug is already in use.")]
-abstract class AbstractNamedEntity extends AbstractNameableEntity implements Stringable {
+abstract class AbstractNamedEntity extends AbstractNameableEntity {
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank(message: "Please provide a name.")]

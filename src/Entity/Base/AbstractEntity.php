@@ -5,8 +5,9 @@ namespace App\Entity\Base;
 use App\Utils\Reflect;
 use Doctrine\ORM\Mapping as ORM;
 use ReflectionAttribute;
+use Stringable;
 
-abstract class AbstractEntity {
+abstract class AbstractEntity implements Stringable {
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
