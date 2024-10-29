@@ -46,7 +46,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return $this->username;
     }
 
-    public function setUsername(string $username): static {
+    public function setUsername(?string $username): static {
         $this->username = $username;
 
         return $this;
@@ -87,7 +87,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return $this->password;
     }
 
-    public function setPassword(string $password): static {
+    public function setPassword(?string $password): static {
         $this->password = $password;
 
         return $this;
@@ -105,7 +105,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return $this->email;
     }
 
-    public function setEmail(string $email): static {
+    public function setEmail(?string $email): static {
         $this->email = $email;
 
         return $this;

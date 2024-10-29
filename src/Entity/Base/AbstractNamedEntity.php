@@ -5,6 +5,7 @@ namespace App\Entity\Base;
 use Doctrine\ORM\Mapping as ORM;
 use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 use function Symfony\Component\String\u;
 
@@ -27,7 +28,7 @@ abstract class AbstractNamedEntity extends AbstractNameableEntity implements Str
         return $this->name;
     }
 
-    public function setName(string $name): static {
+    public function setName(?string $name): static {
         $this->name = u($name)->collapseWhitespace();
 
         return $this;
@@ -37,7 +38,7 @@ abstract class AbstractNamedEntity extends AbstractNameableEntity implements Str
         return $this->slug;
     }
 
-    public function setSlug(string $slug): static {
+    public function setSlug(?string $slug): static {
         $this->slug = trim($slug);
 
         return $this;
@@ -45,6 +46,13 @@ abstract class AbstractNamedEntity extends AbstractNameableEntity implements Str
 
     public function __toString(): string {
         return $this->name;
+    }
+
+    public function preValidate(): void {
+        if(!$this->slug) {
+            $slugger = new AsciiSlugger();
+            $this->setSlug($slugger->slug($this->name, ''));
+        }
     }
 
 }

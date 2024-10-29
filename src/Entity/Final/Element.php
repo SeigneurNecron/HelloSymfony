@@ -32,7 +32,7 @@ class Element extends AbstractNamedEntity implements AdminEntityCUD {
         return $this->color;
     }
 
-    public function setColor(string $color): static {
+    public function setColor(?string $color): static {
         $this->color = trim($color);
 
         return $this;

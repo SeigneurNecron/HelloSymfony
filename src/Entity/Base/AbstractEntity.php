@@ -31,4 +31,6 @@ abstract class AbstractEntity {
         return Reflect::getFieldsAndAttribute($this, ORM\OneToMany::class);
     }
 
+    public function preValidate(): void {}
+
 }

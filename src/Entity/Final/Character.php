@@ -57,7 +57,7 @@ class Character extends AbstractNamedEntity implements AdminEntityCUD {
         return $this->rare;
     }
 
-    public function setRare(bool $rare): static {
+    public function setRare(?bool $rare): static {
         $this->rare = $rare;
 
         return $this;
@@ -67,7 +67,7 @@ class Character extends AbstractNamedEntity implements AdminEntityCUD {
         return $this->genre;
     }
 
-    public function setGenre(Genre $genre): static {
+    public function setGenre(?Genre $genre): static {
         $this->genre = $genre;
 
         return $this;
@@ -77,7 +77,7 @@ class Character extends AbstractNamedEntity implements AdminEntityCUD {
         return $this->size;
     }
 
-    public function setSize(Size $size): static {
+    public function setSize(?Size $size): static {
         $this->size = $size;
 
         return $this;
@@ -117,7 +117,7 @@ class Character extends AbstractNamedEntity implements AdminEntityCUD {
         return $this->version;
     }
 
-    public function setVersion(string $version): static {
+    public function setVersion(?string $version): static {
         $this->version = $version;
 
         return $this;
@@ -127,7 +127,7 @@ class Character extends AbstractNamedEntity implements AdminEntityCUD {
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(DateTimeImmutable $releaseDate): static {
+    public function setReleaseDate(?DateTimeImmutable $releaseDate): static {
         $this->releaseDate = $releaseDate;
 
         return $this;
