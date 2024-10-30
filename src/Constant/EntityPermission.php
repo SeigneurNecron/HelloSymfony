@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Constants;
+namespace App\Constant;
 
 class EntityPermission {
 
@@ -11,6 +11,7 @@ class EntityPermission {
     const DELETE = 'DELETE';
 
     const VALUES = [self::LIST, self::CREATE, self::READ, self::UPDATE, self::DELETE];
+    const CRUD = [self::CREATE, self::READ, self::UPDATE, self::DELETE];
     const CUD = [self::CREATE, self::UPDATE, self::DELETE];
 
 }

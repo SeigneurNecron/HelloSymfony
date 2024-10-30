@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Controller\Base;
 
-use App\Constants\EntityPermission as EP;
-use App\Constants\MessageType as MT;
+use App\Constant\EntityPermission as EP;
+use App\Constant\MessageType as MT;
 use App\Entity\Base\AbstractEntity;
 use App\Entity\Base\AbstractNameableEntity;
 use App\Enum\QueryMode;

@@ -1,43 +1,46 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixture;
 
 use App\Entity\Base\AbstractEntity;
-use App\Entity\Final\WeaponCategory;
+use App\Entity\Final\Region;
 use Exception;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @template-extends AbstractFixtures<WeaponCategory>
+ * @template-extends AbstractFixtures<Region>
  */
-class WeaponCategoryFixtures extends AbstractFixtures {
+class RegionFixtures extends AbstractFixtures {
 
     public function __construct(ValidatorInterface $validator) {
-        parent::__construct($validator, WeaponCategory::class);
+        parent::__construct($validator, Region::class);
     }
 
     protected function getEntityInfos(): array {
         return [
             [
-                'name' => 'Sword',
+                'name' => 'Mondstadt',
             ],
             [
-                'name' => 'Claymore',
+                'name' => 'Liyue',
             ],
             [
-                'name' => 'Polearm',
+                'name' => 'Inazuma',
             ],
             [
-                'name' => 'Bow',
+                'name' => 'Sumeru',
             ],
             [
-                'name' => 'Catalyst',
+                'name' => 'Fontaine',
+            ],
+            [
+                'name' => 'Natlan',
             ],
         ];
     }
 
     /**
-     * @param WeaponCategory $entity
+     * @param Region $entity
      * @param array<string, mixed> $entityInfo
      * @return void
      * @throws Exception

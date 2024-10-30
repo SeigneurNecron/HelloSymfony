@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixture;
 
 use App\Entity\Base\AbstractEntity;
 use App\Entity\Final\Element;

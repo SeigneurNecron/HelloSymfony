@@ -2,8 +2,8 @@
 
 namespace App\Controller\Special;
 
-use App\Constants\MessageType as MT;
-use App\Constants\UserRole as UR;
+use App\Constant\MessageType as MT;
+use App\Constant\UserRole as UR;
 use App\Entity\Final\User;
 use App\Form\Special\CreateFirstAdminType;
 use App\Repository\Final\UserRepository;

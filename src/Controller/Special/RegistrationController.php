@@ -2,7 +2,7 @@
 
 namespace App\Controller\Special;
 
-use App\Constants\MessageType as MT;
+use App\Constant\MessageType as MT;
 use App\Entity\Final\User;
 use App\Form\Special\RegistrationType;
 use App\Security\Registration\EmailVerifier;
@@ -82,5 +82,10 @@ class RegistrationController extends AbstractController {
         $this->addFlash(MT::SUCCESS, "Your email address has been verified.");
         return $this->redirectToRoute('Main_Home');
     }
+
+    // TODO add a profile page
+    // TODO if the user is not verified display a message and a button to send a verification mail (in profile page)
+    // TODO link to ToS (in profile page)
+    // TODO button to change password (in profile page)
 
 }

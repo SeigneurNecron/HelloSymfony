@@ -2,11 +2,11 @@
 
 namespace App\Security\Voter;
 
-use App\Constants\EntityPermission as EP;
-use App\Constants\UserRole as UR;
+use App\Constant\EntityPermission as EP;
+use App\Constant\UserRole as UR;
 use App\Entity\Base\AdminEntityCUD;
 use App\Entity\Base\RestrictedAccessEntity;
-use App\Entity\Base\VerifiedMemberEntity;
+use App\Entity\Base\VerifiedMemberEntityCRUD;
 use App\Entity\Final\User;
 use Exception;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -30,7 +30,8 @@ final class EntityVoter extends Voter {
         if($entity instanceof RestrictedAccessEntity) {
             $user = $token->getUser();
 
-            if($entity instanceof VerifiedMemberEntity
+            if($entity instanceof VerifiedMemberEntityCRUD
+                && in_array($attribute, EP::CRUD)
                 && !(($user instanceof User) && $user->isVerified())
             ) {
                 return false;

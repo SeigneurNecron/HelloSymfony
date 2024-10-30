@@ -2,7 +2,7 @@
 
 namespace App\Entity\Base;
 
-use App\Utils\Reflect;
+use App\Util\Reflect;
 use Doctrine\ORM\Mapping as ORM;
 use ReflectionAttribute;
 use Stringable;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixture;
 
-use App\Constants\UserRole;
+use App\Constant\UserRole;
 use App\Entity\Base\AbstractEntity;
 use App\Entity\Final\User;
 use Exception;

@@ -2,7 +2,7 @@
 
 namespace App\Entity\Final;
 
-use App\Constants\UserRole as UR;
+use App\Constant\UserRole as UR;
 use App\Entity\Base\AbstractEntity;
 use App\Repository\Final\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
