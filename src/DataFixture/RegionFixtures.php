@@ -40,8 +40,9 @@ class RegionFixtures extends AbstractFixtures {
     }
 
     /**
-     * @param Region $entity
+     * @param Region               $entity
      * @param array<string, mixed> $entityInfo
+     *
      * @return void
      * @throws Exception
      */

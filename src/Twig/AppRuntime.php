@@ -23,7 +23,7 @@ class AppRuntime implements RuntimeExtensionInterface {
     private readonly array $entityClasses;
 
     public function __construct() {
-        $entityFQNs = [Character::class, Element::class, WeaponCategory::class, Region::class, User::class];
+        $entityFQNs    = [Character::class, Element::class, WeaponCategory::class, Region::class, User::class];
         $entityClasses = [];
 
         foreach($entityFQNs as $entityFQN) {
@@ -41,10 +41,6 @@ class AppRuntime implements RuntimeExtensionInterface {
         return $object ? StringUtils::getClassName($object) : "null";
     }
 
-    public function getClassSimpleName(object $object): string {
-        return $object ? StringUtils::getClassSimpleName($object) : "null";
-    }
-
     public function getFQN(string $classSimpleName): string {
         return $this->entityClasses[$classSimpleName];
     }
@@ -53,11 +49,11 @@ class AppRuntime implements RuntimeExtensionInterface {
         $type = gettype($thing);
 
         return match ($type) {
-            'string' => $thing,
-            'object' => $this->objectToString($thing),
-            'boolean' => $thing ? "Yes" : "No",
+            'string'            => $thing,
+            'object'            => $this->objectToString($thing),
+            'boolean'           => $thing ? "Yes" : "No",
             'integer', 'double' => "$thing",
-            default => "[$type]"
+            default             => "[$type]"
         };
     }
 
@@ -65,13 +61,13 @@ class AppRuntime implements RuntimeExtensionInterface {
         if($object instanceof Stringable) {
             return $object->__toString();
         }
-        elseif($object instanceof BackedEnum) {
+        else if($object instanceof BackedEnum) {
             return $object->value;
         }
-        elseif($object instanceof UnitEnum) {
+        else if($object instanceof UnitEnum) {
             return $object->name;
         }
-        elseif($object instanceof DateTimeInterface) {
+        else if($object instanceof DateTimeInterface) {
             $date = $object->format('Y-m-d');
             $time = $object->format('H:i:s');
 
@@ -84,6 +80,10 @@ class AppRuntime implements RuntimeExtensionInterface {
 
         $class = StringUtils::getClassSimpleName($object);
         return "[$class]";
+    }
+
+    public function getClassSimpleName(object $object): string {
+        return $object ? StringUtils::getClassSimpleName($object) : "null";
     }
 
     public function isNameableEntity(mixed $thing): bool {

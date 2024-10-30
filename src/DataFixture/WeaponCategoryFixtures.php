@@ -37,8 +37,9 @@ class WeaponCategoryFixtures extends AbstractFixtures {
     }
 
     /**
-     * @param WeaponCategory $entity
+     * @param WeaponCategory       $entity
      * @param array<string, mixed> $entityInfo
+     *
      * @return void
      * @throws Exception
      */

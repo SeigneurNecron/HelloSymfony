@@ -16,7 +16,7 @@ abstract class AbstractFixtures extends Fixture {
 
     /**
      * @param ValidatorInterface $validator
-     * @param class-string<E> $entityClass
+     * @param class-string<E>    $entityClass
      */
     public function __construct(
         protected readonly ValidatorInterface $validator,
@@ -24,32 +24,8 @@ abstract class AbstractFixtures extends Fixture {
     ) {}
 
     /**
-     * @return E
-     */
-    protected function newEntity() {
-        return new $this->entityClass();
-    }
-
-    /**
-     * @param E $entity
-     * @return void
-     */
-    protected function addEntityReference(AbstractEntity $entity): void {
-        $this->addReference($this->entityClass . ' ' . $entity->__toString(), $entity);
-    }
-
-    /**
-     * @template T
-     * @param class-string<T> $entityClass
-     * @param string $key
-     * @return T|null
-     */
-    protected function getEntityReference(string $entityClass, string $key): ?object {
-        return $this->getReference($entityClass . ' ' . $key);
-    }
-
-    /**
      * @param ObjectManager $manager
+     *
      * @return void
      * @throws Exception
      */
@@ -79,11 +55,39 @@ abstract class AbstractFixtures extends Fixture {
     protected abstract function getEntityInfos(): array;
 
     /**
-     * @param E $entity
+     * @return E
+     */
+    protected function newEntity() {
+        return new $this->entityClass();
+    }
+
+    /**
+     * @param E                    $entity
      * @param array<string, mixed> $entityInfo
+     *
      * @return void
      * @throws Exception
      */
     protected abstract function hydrateEntity(AbstractEntity $entity, array $entityInfo): void;
+
+    /**
+     * @param E $entity
+     *
+     * @return void
+     */
+    protected function addEntityReference(AbstractEntity $entity): void {
+        $this->addReference($this->entityClass . ' ' . $entity->__toString(), $entity);
+    }
+
+    /**
+     * @template T
+     * @param class-string<T> $entityClass
+     * @param string          $key
+     *
+     * @return T|null
+     */
+    protected function getEntityReference(string $entityClass, string $key): ?object {
+        return $this->getReference($entityClass . ' ' . $key);
+    }
 
 }

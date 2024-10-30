@@ -30,14 +30,16 @@ final class EntityVoter extends Voter {
         if($entity instanceof RestrictedAccessEntity) {
             $user = $token->getUser();
 
-            if($entity instanceof VerifiedMemberEntityCRUD
+            if(
+                $entity instanceof VerifiedMemberEntityCRUD
                 && in_array($attribute, EP::CRUD)
                 && !(($user instanceof User) && $user->isVerified())
             ) {
                 return false;
             }
 
-            if(($entity instanceof AdminEntityCUD)
+            if(
+                ($entity instanceof AdminEntityCUD)
                 && in_array($attribute, EP::CUD)
                 && !(($user instanceof User) && in_array(UR::ROLE_ADMIN, $user->getRoles()))
             ) {

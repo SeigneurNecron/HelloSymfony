@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractCustomType extends AbstractType {
 
     public final function buildForm(FormBuilderInterface $builder, array $options): void {
-        $buildMethods = Reflect::getMethodsAndAttribute($this, BuildFormMethod::class);
+        $buildMethods      = Reflect::getMethodsAndAttribute($this, BuildFormMethod::class);
         $buildLaterMethods = [];
 
         foreach($buildMethods as $buildMethod => $attribute) {
@@ -33,9 +33,11 @@ abstract class AbstractCustomType extends AbstractType {
 
         if($options['insertSubmitButton']) {
             $builder
-                ->add('submitButton', SubmitType::class, options: [
-                    'label' => $options['submitButtonLabel']
-                ]);
+                ->add(
+                    'submitButton', SubmitType::class, options: [
+                    'label' => $options['submitButtonLabel'],
+                ],
+                );
         }
     }
 

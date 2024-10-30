@@ -23,7 +23,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController {
 
     public function __construct(
-        private readonly EmailVerifier $emailVerifier
+        private readonly EmailVerifier $emailVerifier,
     ) {}
 
     #[Route('/Register', name: 'Register')]
@@ -41,12 +41,13 @@ class RegistrationController extends AbstractController {
                 $entityManager->flush();
 
                 try {
-                    $this->emailVerifier->sendEmailConfirmation('Registration_VerifyEmail', $user,
+                    $this->emailVerifier->sendEmailConfirmation(
+                        'Registration_VerifyEmail', $user,
                         (new TemplatedEmail())
                             ->from(new Address('support@hellosymfony.com', 'Support'))
-                            ->to((string)$user->getEmail())
+                            ->to((string) $user->getEmail())
                             ->subject("Please Confirm your Email")
-                            ->htmlTemplate('/Security/ConfirmationEmail.html.twig')
+                            ->htmlTemplate('/Security/ConfirmationEmail.html.twig'),
                     );
                     $this->addFlash(MT::INFO, 'Please check your emails and use the link to verify your account.');
                 }

@@ -12,12 +12,17 @@ class EntityDeletionType extends AbstractCustomType {
 
     public function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('confirm', CheckboxType::class, options: [
+            ->add(
+                'confirm', CheckboxType::class, options: [
                 'constraints' => [
-                    new IsTrue(['message' => "You need to confirm the deletion to proceed."
-                    ]),
+                    new IsTrue(
+                        [
+                            'message' => "You need to confirm the deletion to proceed.",
+                        ],
+                    ),
                 ],
-            ]);
+            ],
+            );
     }
 
     public function doConfigureOptions(OptionsResolver $resolver): void {

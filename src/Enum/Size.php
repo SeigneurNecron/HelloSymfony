@@ -4,8 +4,8 @@ namespace App\Enum;
 
 enum Size: string {
 
-    case Short = 'Short';
+    case Short  = 'Short';
     case Medium = 'Medium';
-    case Tall = 'Tall';
+    case Tall   = 'Tall';
 
 }

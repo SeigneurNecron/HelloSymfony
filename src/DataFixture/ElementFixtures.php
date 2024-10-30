@@ -19,39 +19,40 @@ class ElementFixtures extends AbstractFixtures {
     protected function getEntityInfos(): array {
         return [
             [
-                'name' => 'Electro',
+                'name'  => 'Electro',
                 'color' => 'purple',
             ],
             [
-                'name' => 'Pyro',
+                'name'  => 'Pyro',
                 'color' => 'red',
             ],
             [
-                'name' => 'Hydro',
+                'name'  => 'Hydro',
                 'color' => 'blue',
             ],
             [
-                'name' => 'Cryo',
+                'name'  => 'Cryo',
                 'color' => 'light-blue',
             ],
             [
-                'name' => 'Geo',
+                'name'  => 'Geo',
                 'color' => 'brown',
             ],
             [
-                'name' => 'Anemo',
+                'name'  => 'Anemo',
                 'color' => 'turquoise',
             ],
             [
-                'name' => 'Dendro',
+                'name'  => 'Dendro',
                 'color' => 'green',
             ],
         ];
     }
 
     /**
-     * @param Element $entity
+     * @param Element              $entity
      * @param array<string, mixed> $entityInfo
+     *
      * @return void
      * @throws Exception
      */

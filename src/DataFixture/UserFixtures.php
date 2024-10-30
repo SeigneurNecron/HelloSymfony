@@ -22,31 +22,32 @@ class UserFixtures extends AbstractFixtures {
         return [
             [
                 'username' => 'JudgeDead',
-                'email' => 'judge.dead@test.com',
+                'email'    => 'judge.dead@test.com',
                 'password' => '4444',
-                'roles' => [UserRole::ROLE_ADMIN],
+                'roles'    => [UserRole::ROLE_ADMIN],
                 'verified' => true,
             ],
             [
                 'username' => 'JeanMich',
-                'email' => 'jean.mich@test.com',
+                'email'    => 'jean.mich@test.com',
                 'password' => 'aaaaaa',
-                'roles' => [],
+                'roles'    => [],
                 'verified' => true,
             ],
             [
                 'username' => 'JackSparou',
-                'email' => 'jack.sparou@test.com',
+                'email'    => 'jack.sparou@test.com',
                 'password' => 'aaaaaa',
-                'roles' => [],
+                'roles'    => [],
                 'verified' => false,
             ],
         ];
     }
 
     /**
-     * @param User $entity
+     * @param User                 $entity
      * @param array<string, mixed> $entityInfo
+     *
      * @return void
      * @throws Exception
      */

@@ -8,7 +8,7 @@ use Attribute;
 class BuildFormMethod {
 
     public function __construct(
-        public readonly bool $atTheEnd = false
+        public readonly bool $atTheEnd = false,
     ) {}
 
 }

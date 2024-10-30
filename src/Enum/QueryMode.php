@@ -7,5 +7,5 @@ enum QueryMode {
     case Simple;
     case WithChildren;
     case WithParents;
-    
+
 }

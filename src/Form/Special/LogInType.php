@@ -13,24 +13,30 @@ class LogInType extends AbstractCustomType {
 
     public final function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
-            ->add('username', TextType::class, options: [
+            ->add(
+                'username', TextType::class, options: [
                 'label' => "Username or email",
-                'attr' => [
-                    'autofocus' => true,
+                'attr'  => [
+                    'autofocus'    => true,
                     'autocomplete' => 'username',
-                    'value' => $options['lastUsername'],
+                    'value'        => $options['lastUsername'],
                 ],
-            ])
-            ->add('password', PasswordType::class, options: [
+            ],
+            )
+            ->add(
+                'password', PasswordType::class, options: [
                 'label' => "Password",
-                'attr' => [
+                'attr'  => [
                     'autocomplete' => 'current-password',
                 ],
-            ])
-            ->add('remember_me', CheckboxType::class, options: [
-                'label' => 'Remember me',
+            ],
+            )
+            ->add(
+                'remember_me', CheckboxType::class, options: [
+                'label'    => 'Remember me',
                 'required' => false,
-            ]);
+            ],
+            );
     }
 
     public function doConfigureOptions(OptionsResolver $resolver): void {

@@ -32,7 +32,7 @@ class DevController extends AbstractController {
             if($form->isValid()) {
                 try {
                     $username = $this->getParameter('App.Default.FirstAdmin.Username');
-                    $email = $this->getParameter('App.Default.FirstAdmin.Email');
+                    $email    = $this->getParameter('App.Default.FirstAdmin.Email');
                     $password = $this->getParameter('App.Default.FirstAdmin.Password');
 
                     $user = $repository->findOneByUsernameOrEmail($username, $email);
@@ -47,10 +47,10 @@ class DevController extends AbstractController {
                     }
 
                     $user->setUsername($username)
-                        ->setEmail($email)
-                        ->setPassword($hasher->hashPassword($user, $password))
-                        ->setRoles([UR::ROLE_ADMIN])
-                        ->setVerified(true);
+                         ->setEmail($email)
+                         ->setPassword($hasher->hashPassword($user, $password))
+                         ->setRoles([UR::ROLE_ADMIN])
+                         ->setVerified(true);
                     $entityManager->persist($user);
                     $entityManager->flush();
 

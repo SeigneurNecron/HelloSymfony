@@ -33,22 +33,23 @@ class CharacterFixtures extends AbstractFixtures implements DependentFixtureInte
     protected function getEntityInfos(): array {
         return [
             [
-                'name' => 'Amber',
-                'rare' => false,
-                'element' => 'Pyro',
+                'name'           => 'Amber',
+                'rare'           => false,
+                'element'        => 'Pyro',
                 'weaponCategory' => 'Bow',
-                'region' => 'Mondstadt',
-                'genre' => Genre::Female,
-                'size' => Size::Medium,
-                'releaseDate' => '2020-09-28',
-                'version' => '1.0',
+                'region'         => 'Mondstadt',
+                'genre'          => Genre::Female,
+                'size'           => Size::Medium,
+                'releaseDate'    => '2020-09-28',
+                'version'        => '1.0',
             ],
         ];
     }
 
     /**
-     * @param Character $entity
+     * @param Character            $entity
      * @param array<string, mixed> $entityInfo
+     *
      * @return void
      * @throws Exception
      */

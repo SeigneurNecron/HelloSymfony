@@ -25,17 +25,18 @@ abstract class AbstractNameableEntityRepository extends ServiceEntityRepository 
     }
 
     /**
+     * @param string    $slug
+     * @param QueryMode $queryMode
+     *
+     * @return E|null
+     */
+    public abstract function findOneBySlug(string $slug, QueryMode $queryMode): ?AbstractNameableEntity;
+
+    /**
      * @return E
      */
     protected function newEntity() {
         return new $this->entityClass();
     }
-
-    /**
-     * @param string $slug
-     * @param QueryMode $queryMode
-     * @return E|null
-     */
-    public abstract function findOneBySlug(string $slug, QueryMode $queryMode): ?AbstractNameableEntity;
 
 }

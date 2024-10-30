@@ -12,14 +12,15 @@ use App\Enum\QueryMode;
 abstract class AbstractNamedEntityRepository extends AbstractNameableEntityRepository {
 
     /**
-     * @param string $slug
+     * @param string    $slug
      * @param QueryMode $queryMode
+     *
      * @return E|null
      */
     public function findOneBySlug(string $slug, QueryMode $queryMode): ?AbstractNamedEntity {
         $builder = $this->createQueryBuilder('entity')
-            ->andWhere('entity.slug = :slug')
-            ->setParameter('slug', $slug);
+                        ->andWhere('entity.slug = :slug')
+                        ->setParameter('slug', $slug);
 
         if($queryMode !== QueryMode::Simple) {
             $entity = $this->newEntity();

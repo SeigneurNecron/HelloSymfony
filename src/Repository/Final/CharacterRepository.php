@@ -26,22 +26,22 @@ class CharacterRepository extends AbstractNamedEntityRepository {
 
         if(!$element === null) {
             $builder->andWhere('character.element = :element')
-                ->setParameter('element', $element);
+                    ->setParameter('element', $element);
         }
 
         if(!$weaponCategory === null) {
             $builder->andWhere('character.weaponCategory = :weaponCategory')
-                ->setParameter('weaponCategory', $weaponCategory);
+                    ->setParameter('weaponCategory', $weaponCategory);
         }
 
         if(!$region === null) {
             $builder->andWhere('character.region = :region')
-                ->setParameter('region', $region);
+                    ->setParameter('region', $region);
         }
 
         return $builder->orderBy('character.name', 'ASC')
-            ->getQuery()
-            ->getResult();
+                       ->getQuery()
+                       ->getResult();
     }
 
 }

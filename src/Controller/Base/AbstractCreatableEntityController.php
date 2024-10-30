@@ -32,9 +32,10 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
 
     #[Route(path: '/Create', name: 'Create')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response {
-        return $this->checkPermissionAndDo(EP::CREATE, function() use ($request, $entityManager) {
+        return $this->checkPermissionAndDo(
+            EP::CREATE, function() use ($request, $entityManager) {
             $entity = $this->newEntity();
-            $form = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Create"]);
+            $form   = $this->createForm($this->formClass, $entity, ['submitButtonLabel' => "Create"]);
             $form->handleRequest($request);
 
             if($form->isSubmitted()) {
@@ -50,16 +51,18 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
             }
 
             return $this->render('Entity/Prefab/Edit.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form]);
-        });
+        },
+        );
     }
 
     #[Route(path: '/{slug}/Delete', name: 'Delete', requirements: ['slug' => '[a-zA-Z0-9]+'])]
     public function delete(string $slug, Request $request, EntityManagerInterface $entityManager): Response {
-        return $this->checkPermissionFindEntityAndDo(EP::DELETE, $slug, QueryMode::WithParents, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
-            $form = null;
-            $canDelete = true;
-            $emptyFields = [];
-            $lockedFields = [];
+        return $this->checkPermissionFindEntityAndDo(
+            EP::DELETE, $slug, QueryMode::WithParents, function(AbstractNameableEntity $entity) use ($request, $entityManager) {
+            $form          = null;
+            $canDelete     = true;
+            $emptyFields   = [];
+            $lockedFields  = [];
             $cascadeFields = [];
 
             /** @var OneToMany $attribute */
@@ -77,7 +80,7 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
                     }
                     else {
                         $lockedFields[] = $parentField;
-                        $canDelete = false;
+                        $canDelete      = false;
                     }
                 }
                 else {
@@ -105,7 +108,8 @@ abstract class AbstractCreatableEntityController extends AbstractEntityControlle
             }
 
             return $this->render('Entity/Prefab/Delete.html.twig', ['type' => $this->entityName, 'entity' => $entity, 'form' => $form, 'parentFields' => $parentFields]);
-        });
+        },
+        );
     }
 
 }

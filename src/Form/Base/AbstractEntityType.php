@@ -19,18 +19,20 @@ abstract class AbstractEntityType extends AbstractCustomType {
      * @param class-string<E> $entityClass
      */
     protected function __construct(
-        protected readonly string $entityClass
+        protected readonly string $entityClass,
     ) {}
 
     #[BuildFormMethod]
     protected function buildFormOfAbstractEntity(FormBuilderInterface $builder, array $options): void {
-        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+        $builder->addEventListener(
+            FormEvents::SUBMIT, function(FormEvent $event) {
             $data = $event->getData();
 
             if($data instanceof AbstractEntity) {
                 $data->preValidate();
             }
-        });
+        },
+        );
     }
 
     #[ConfigureOptionsMethod]
