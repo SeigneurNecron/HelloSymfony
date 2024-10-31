@@ -5,17 +5,17 @@ namespace App\DataFixture;
 use App\Constant\UserRole;
 use App\Entity\Base\AbstractEntity;
 use App\Entity\Final\User;
+use App\Service\Entity\Final\UserManager;
 use Exception;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @template-extends AbstractFixtures<User>
  */
 class UserFixtures extends AbstractFixtures {
 
-    public function __construct(ValidatorInterface $validator, private readonly UserPasswordHasherInterface $hasher) {
-        parent::__construct($validator, User::class);
+    public function __construct(UserManager $entityManager, private readonly UserPasswordHasherInterface $hasher) {
+        parent::__construct($entityManager);
     }
 
     protected function getEntityInfos(): array {

@@ -4,16 +4,16 @@ namespace App\DataFixture;
 
 use App\Entity\Base\AbstractEntity;
 use App\Entity\Final\WeaponCategory;
+use App\Service\Entity\Final\WeaponCategoryManager;
 use Exception;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @template-extends AbstractFixtures<WeaponCategory>
  */
 class WeaponCategoryFixtures extends AbstractFixtures {
 
-    public function __construct(ValidatorInterface $validator) {
-        parent::__construct($validator, WeaponCategory::class);
+    public function __construct(WeaponCategoryManager $entityManager) {
+        parent::__construct($entityManager);
     }
 
     protected function getEntityInfos(): array {

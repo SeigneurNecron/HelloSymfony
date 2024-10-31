@@ -4,17 +4,19 @@ declare(strict_types = 1);
 
 namespace App\Controller\Entity;
 
-use App\Controller\Base\AbstractCreatableEntityController;
-use App\Entity\Final\Region;
+use App\Controller\Base\AbstractCreatableNameableEntityController;
 use App\Form\Entity\RegionType;
-use App\Repository\Final\RegionRepository;
+use App\Service\Entity\Final\RegionManager;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * @template-extends AbstractCreatableNameableEntityController<Region>
+ */
 #[Route('/Region', name: 'Region_')]
-class RegionController extends AbstractCreatableEntityController {
+class RegionController extends AbstractCreatableNameableEntityController {
 
-    public function __construct(RegionRepository $repository) {
-        parent::__construct(Region::class, RegionType::class, $repository);
+    public function __construct(RegionManager $manager) {
+        parent::__construct($manager, RegionType::class);
     }
 
 }

@@ -4,16 +4,16 @@ namespace App\DataFixture;
 
 use App\Entity\Base\AbstractEntity;
 use App\Entity\Final\Element;
+use App\Service\Entity\Final\ElementManager;
 use Exception;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @template-extends AbstractFixtures<Element>
  */
 class ElementFixtures extends AbstractFixtures {
 
-    public function __construct(ValidatorInterface $validator) {
-        parent::__construct($validator, Element::class);
+    public function __construct(ElementManager $entityManager) {
+        parent::__construct($entityManager);
     }
 
     protected function getEntityInfos(): array {

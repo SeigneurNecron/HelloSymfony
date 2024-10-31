@@ -6,7 +6,7 @@ use App\Constant\MessageType as MT;
 use App\Entity\Final\User;
 use App\Form\Special\RegistrationType;
 use App\Security\Registration\EmailVerifier;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Entity\Final\UserManager;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController {
     ) {}
 
     #[Route('/Register', name: 'Register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response {
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, UserManager $userManager): Response {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
@@ -37,8 +37,7 @@ class RegistrationController extends AbstractController {
                 /** @var string $plainPassword */
                 $plainPassword = $form->get('plainPassword')->getData();
                 $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-                $entityManager->persist($user);
-                $entityManager->flush();
+                $userManager->create($user);
 
                 try {
                     $this->emailVerifier->sendEmailConfirmation(

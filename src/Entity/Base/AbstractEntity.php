@@ -32,6 +32,4 @@ abstract class AbstractEntity implements Stringable {
         return Reflect::getFieldsAndAttribute($this, ORM\OneToMany::class);
     }
 
-    public function preValidate(): void {}
-
 }

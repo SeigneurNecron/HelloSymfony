@@ -3,7 +3,7 @@
 namespace App\Repository\Final;
 
 use App\Entity\Final\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\Base\AbstractEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -12,9 +12,9 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @extends ServiceEntityRepository<User>
+ * @extends AbstractEntityRepository<User>
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface {
+class UserRepository extends AbstractEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface {
 
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, User::class);

@@ -3,25 +3,26 @@
 namespace App\DataFixture;
 
 use App\Entity\Base\AbstractEntity;
+use App\Service\Entity\Base\AbstractEntityManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
-use Symfony\Component\Validator\Exception\ValidationFailedException;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @template E of AbstractEntity
  */
 abstract class AbstractFixtures extends Fixture {
 
+    private readonly string $entityClass;
+
     /**
-     * @param ValidatorInterface $validator
-     * @param class-string<E>    $entityClass
+     * @param AbstractEntityManager<E> $entityManager
      */
     public function __construct(
-        protected readonly ValidatorInterface $validator,
-        protected readonly string             $entityClass,
-    ) {}
+        protected readonly AbstractEntityManager $entityManager,
+    ) {
+        $this->entityClass = $this->entityManager->entityClass;
+    }
 
     /**
      * @param ObjectManager $manager
@@ -35,18 +36,9 @@ abstract class AbstractFixtures extends Fixture {
         foreach($entityInfos as $entityInfo) {
             $entity = $this->newEntity();
             $this->hydrateEntity($entity, $entityInfo);
-            $entity->preValidate();
-            $violations = $this->validator->validate($entity);
-
-            if($violations->count()) {
-                throw new ValidationFailedException($entity, $violations);
-            }
-
-            $manager->persist($entity);
+            $this->entityManager->create($entity);
             $this->addReference($this->entityClass . ' ' . $entity->__toString(), $entity);
         }
-
-        $manager->flush();
     }
 
     /**

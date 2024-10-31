@@ -6,8 +6,7 @@ use App\Constant\MessageType as MT;
 use App\Constant\UserRole as UR;
 use App\Entity\Final\User;
 use App\Form\Special\CreateFirstAdminType;
-use App\Repository\Final\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Entity\Final\UserManager;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +23,7 @@ class DevController extends AbstractController {
     }
 
     #[Route(path: '/FirstAdmin', name: 'FirstAdmin')]
-    public function firstAdmin(Request $request, UserRepository $repository, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response {
+    public function firstAdmin(Request $request, UserManager $userManager, UserPasswordHasherInterface $hasher): Response {
         $form = $this->createForm(CreateFirstAdminType::class);
         $form->handleRequest($request);
 
@@ -35,7 +34,7 @@ class DevController extends AbstractController {
                     $email    = $this->getParameter('App.Default.FirstAdmin.Email');
                     $password = $this->getParameter('App.Default.FirstAdmin.Password');
 
-                    $user = $repository->findOneByUsernameOrEmail($username, $email);
+                    $user = $userManager->findOneByUsernameOrEmail($username, $email);
 
                     if($user) {
                         if(!$form->getData()['updateIfExists']) {
@@ -51,8 +50,7 @@ class DevController extends AbstractController {
                          ->setPassword($hasher->hashPassword($user, $password))
                          ->setRoles([UR::ROLE_ADMIN])
                          ->setVerified(true);
-                    $entityManager->persist($user);
-                    $entityManager->flush();
+                    $userManager->create($user);
 
                     $this->addFlash(MT::SUCCESS, "Default admin created!");
                     return $this->redirectToRoute('Dev_Home');

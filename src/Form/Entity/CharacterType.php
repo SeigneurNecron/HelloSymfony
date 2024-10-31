@@ -9,7 +9,7 @@ use App\Entity\Final\WeaponCategory;
 use App\Enum\Genre;
 use App\Enum\Size;
 use App\Form\Base\AbstractEntityType;
-use App\Form\Trait\WithName;
+use App\Form\Field\NameAndSlugType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -20,14 +20,15 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CharacterType extends AbstractEntityType {
 
-    use WithName;
-
     public function __construct() {
         parent::__construct(Character::class);
     }
 
     protected function doBuildForm(FormBuilderInterface $builder, array $options): void {
         $builder
+            ->add(
+                'nameAndSlug', NameAndSlugType::class,
+            )
             ->add(
                 'rare', ChoiceType::class, options: [
                 'choices' => ["No" => false, "Yes" => true],
@@ -66,7 +67,9 @@ class CharacterType extends AbstractEntityType {
                 'widget' => 'single_text',
             ],
             )
-            ->add('version');
+            ->add(
+                'version',
+            );
     }
 
 }

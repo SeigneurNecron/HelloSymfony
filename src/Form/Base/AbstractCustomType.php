@@ -41,13 +41,17 @@ abstract class AbstractCustomType extends AbstractType {
         }
     }
 
-    protected function doBuildForm(FormBuilderInterface $builder, array $options): void {
-        // Allows child classes to build the form directly.
-    }
-
     public final function configureOptions(OptionsResolver $resolver): void {
-        $resolver->setDefault('insertSubmitButton', true);
-        $resolver->setDefault('submitButtonLabel', 'Submit');
+        $resolver->setDefaults(
+            [
+                'insertSubmitButton' => true,
+                'submitButtonLabel'  => 'Submit',
+                'attr'               => [
+                    'data-controller' => 'form-manager',
+                    'data-action'     => 'form-manager#submit',
+                ],
+            ],
+        );
 
         $this->doConfigureOptions($resolver);
 
@@ -56,6 +60,10 @@ abstract class AbstractCustomType extends AbstractType {
         foreach($configureMethods as $configureMethod) {
             $this->$configureMethod($resolver);
         }
+    }
+
+    protected function doBuildForm(FormBuilderInterface $builder, array $options): void {
+        // Allows child classes to build the form directly.
     }
 
     protected function doConfigureOptions(OptionsResolver $resolver): void {

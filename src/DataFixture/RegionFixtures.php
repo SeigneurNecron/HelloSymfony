@@ -4,16 +4,16 @@ namespace App\DataFixture;
 
 use App\Entity\Base\AbstractEntity;
 use App\Entity\Final\Region;
+use App\Service\Entity\Final\RegionManager;
 use Exception;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @template-extends AbstractFixtures<Region>
  */
 class RegionFixtures extends AbstractFixtures {
 
-    public function __construct(ValidatorInterface $validator) {
-        parent::__construct($validator, Region::class);
+    public function __construct(RegionManager $entityManager) {
+        parent::__construct($entityManager);
     }
 
     protected function getEntityInfos(): array {

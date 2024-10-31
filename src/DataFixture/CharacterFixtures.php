@@ -9,18 +9,18 @@ use App\Entity\Final\Region;
 use App\Entity\Final\WeaponCategory;
 use App\Enum\Genre;
 use App\Enum\Size;
+use App\Service\Entity\Final\CharacterManager;
 use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Exception;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @template-extends AbstractFixtures<Character>
  */
 class CharacterFixtures extends AbstractFixtures implements DependentFixtureInterface {
 
-    public function __construct(ValidatorInterface $validator) {
-        parent::__construct($validator, Character::class);
+    public function __construct(CharacterManager $entityManager) {
+        parent::__construct($entityManager);
     }
 
     /**

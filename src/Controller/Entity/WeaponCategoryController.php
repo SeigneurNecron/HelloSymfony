@@ -4,17 +4,19 @@ declare(strict_types = 1);
 
 namespace App\Controller\Entity;
 
-use App\Controller\Base\AbstractCreatableEntityController;
-use App\Entity\Final\WeaponCategory;
+use App\Controller\Base\AbstractCreatableNameableEntityController;
 use App\Form\Entity\WeaponCategoryType;
-use App\Repository\Final\WeaponCategoryRepository;
+use App\Service\Entity\Final\WeaponCategoryManager;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * @template-extends AbstractCreatableNameableEntityController<WeaponCategory>
+ */
 #[Route('/WeaponCategory', name: 'WeaponCategory_')]
-class WeaponCategoryController extends AbstractCreatableEntityController {
+class WeaponCategoryController extends AbstractCreatableNameableEntityController {
 
-    public function __construct(WeaponCategoryRepository $repository) {
-        parent::__construct(WeaponCategory::class, WeaponCategoryType::class, $repository);
+    public function __construct(WeaponCategoryManager $manager) {
+        parent::__construct($manager, WeaponCategoryType::class);
     }
 
 }
