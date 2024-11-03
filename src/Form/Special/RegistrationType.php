@@ -34,6 +34,9 @@ class RegistrationType extends AbstractCustomType {
                 'type'            => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'mapped'          => false,
+                'options'         => [
+                    'toggle' => true,
+                ],
                 'first_options'   => [
                     'label'       => 'Password',
                     'attr'        => ['autocomplete' => 'new-password'],

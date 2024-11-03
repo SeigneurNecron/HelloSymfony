@@ -25,8 +25,9 @@ class LogInType extends AbstractCustomType {
             )
             ->add(
                 'password', PasswordType::class, options: [
-                'label' => "Password",
-                'attr'  => [
+                'label'  => "Password",
+                'toggle' => true,
+                'attr'   => [
                     'autocomplete' => 'current-password',
                 ],
             ],
