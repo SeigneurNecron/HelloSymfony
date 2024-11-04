@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\Registration;
+namespace App\Service\Security;
 
 use App\Entity\Final\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -8,6 +8,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
@@ -22,9 +23,15 @@ readonly class EmailVerifier {
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendEmailConfirmation(string $verifyEmailRouteName, User $user, TemplatedEmail $email): void {
+    public function sendVerificationEmail(User $user): void {
+        $email = (new TemplatedEmail())
+            ->from(new Address('support@hellosymfony.com', 'Support'))
+            ->to((string) $user->getEmail())
+            ->subject("Please Confirm your Email")
+            ->htmlTemplate('Email/VerificationEmail.html.twig');
+
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
-            $verifyEmailRouteName,
+            'Registration_VerifyEmail',
             (string) $user->getId(),
             (string) $user->getEmail(),
         );
@@ -37,6 +44,19 @@ readonly class EmailVerifier {
         $email->context($context);
 
         $this->mailer->send($email);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function sendAlreadyExistsMail(User $user): void {
+        $this->mailer->send(
+            (new TemplatedEmail())
+                ->from(new Address('support@hellosymfony.com', 'Support'))
+                ->to((string) $user->getEmail())
+                ->subject("You already have an account")
+                ->htmlTemplate('Email/AlreadyExistsEmail.html.twig'),
+        );
     }
 
     /**

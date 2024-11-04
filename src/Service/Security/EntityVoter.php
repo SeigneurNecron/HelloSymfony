@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\Voter;
+namespace App\Service\Security;
 
 use App\Constant\EntityPermission as EP;
 use App\Constant\UserRole as UR;
