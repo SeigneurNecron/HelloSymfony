@@ -35,7 +35,10 @@ abstract class AbstractCustomType extends AbstractType {
             $builder
                 ->add(
                     'submitButton', SubmitType::class, options: [
-                    'label' => $options['submitButtonLabel'],
+                    'label'    => $options['submitButtonLabel'],
+                    'row_attr' => [
+                        'class' => 'mainFormButton',
+                    ],
                 ],
                 );
         }

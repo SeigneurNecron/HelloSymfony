@@ -52,6 +52,7 @@ class RegistrationController extends AbstractController {
                 }
                 catch(ValidationFailedException $e) {
                     $this->addFlash(MT::ERROR, $e->getMessage());
+                    return $this->redirectToRoute('Registration_Register');
                 }
             }
             else {

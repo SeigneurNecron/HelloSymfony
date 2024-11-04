@@ -22,6 +22,8 @@ class RegistrationType extends AbstractCustomType {
     ) {}
 
     public function doBuildForm(FormBuilderInterface $builder, array $options): void {
+        $tosPath = $this->router->generate('Main_ToS');
+
         $builder
             ->add(
                 'email', EmailType::class, options: [
@@ -58,7 +60,7 @@ class RegistrationType extends AbstractCustomType {
             )
             ->add(
                 'agreeTerms', CheckboxType::class, options: [
-                'label'       => "I agree with the <a href=\"" . $this->router->generate('Main_ToS') . "\" title=\"terms and conditions\">terms and conditions</a>",
+                'label'       => "I agree with the <a href=\"$tosPath\" title=\"terms and conditions\">terms and conditions</a>",
                 'label_html'  => true,
                 'mapped'      => false,
                 'constraints' => [
