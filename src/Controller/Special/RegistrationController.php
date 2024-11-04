@@ -113,8 +113,4 @@ class RegistrationController extends AbstractController {
         }
     }
 
-    // TODO add a profile page
-    // TODO if the user is not verified display a message and a button to send a verification mail (in profile page)
-    // TODO button to change password (in profile page)
-
 }

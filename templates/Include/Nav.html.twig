@@ -25,7 +25,10 @@
 
         <div>
             {% if app.user %}
-                {{ app.user.userIdentifier ~ ' | ' }}
+                {% include 'Include/NavItem.html.twig' with {'linkInfo': {
+                    route: 'Account_Profile',
+                    title: app.user.userIdentifier,
+                }} %}
                 {% include 'Include/NavItem.html.twig' with {'linkInfo': {
                     route: 'Security_Logout',
                     title: "Log Out",
