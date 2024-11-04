@@ -8,7 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @template E of AbstractEntity
- * @extends ServiceEntityRepository<E>
+ * @template-extends ServiceEntityRepository<E>
  */
 abstract class AbstractEntityRepository extends ServiceEntityRepository {
 

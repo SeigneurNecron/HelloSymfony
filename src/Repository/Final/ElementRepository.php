@@ -7,7 +7,7 @@ use App\Repository\Base\AbstractNamedEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends AbstractNamedEntityRepository<Element>
+ * @template-extends AbstractNamedEntityRepository<Element>
  */
 class ElementRepository extends AbstractNamedEntityRepository {
 

@@ -10,7 +10,7 @@ use App\Repository\Base\AbstractNamedEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends AbstractNamedEntityRepository<Character>
+ * @template-extends AbstractNamedEntityRepository<Character>
  */
 class CharacterRepository extends AbstractNamedEntityRepository {
 

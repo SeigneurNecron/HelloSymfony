@@ -7,7 +7,7 @@ use App\Repository\Base\AbstractNamedEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends AbstractNamedEntityRepository<WeaponCategory>
+ * @template-extends AbstractNamedEntityRepository<WeaponCategory>
  */
 class WeaponCategoryRepository extends AbstractNamedEntityRepository {
 

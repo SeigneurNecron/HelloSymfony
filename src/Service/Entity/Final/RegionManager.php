@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @template-extends AbstractNamedEntityManager<Region>
+ * @template-extends AbstractNamedEntityManager<Region, RegionRepository>
  */
 readonly class RegionManager extends AbstractNamedEntityManager {
 

@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @extends AbstractEntityRepository<User>
+ * @template-extends AbstractEntityRepository<User>
  */
 class UserRepository extends AbstractEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface {
 

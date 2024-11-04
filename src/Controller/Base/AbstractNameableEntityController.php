@@ -8,12 +8,14 @@ use App\Constant\EntityPermission as EP;
 use App\Constant\MessageType as MT;
 use App\Entity\Base\AbstractNameableEntity;
 use App\Enum\QueryMode;
+use App\Exception\SecretValidationFailedException;
 use App\Form\Base\AbstractEntityType;
 use App\Service\Entity\Base\AbstractNameableEntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 /**
  * @template E of AbstractNameableEntity
@@ -84,13 +86,21 @@ abstract class AbstractNameableEntityController extends AbstractController {
 
                 if($form->isSubmitted()) {
                     if($form->isValid()) {
-                        $this->manager->update($entity);
-                        $this->addFlash(MT::SUCCESS, "$this->entityClassName \"{$entity->getName()}\" updated!");
+                        try {
+                            $this->manager->update($entity);
+                            $this->addFlash(MT::SUCCESS, "$this->entityClassName \"{$entity->getName()}\" updated!");
 
-                        return $this->redirectToRoute(
-                            $this->entityClassName . '_Details',
-                            ['slug' => $entity->getSlug()],
-                        );
+                            return $this->redirectToRoute(
+                                $this->entityClassName . '_Details',
+                                ['slug' => $entity->getSlug()],
+                            );
+                        }
+                        catch(ValidationFailedException $e) {
+                            $this->addFlash(MT::ERROR, $e->getMessage());
+                        }
+                        catch(SecretValidationFailedException $e) {
+                            $this->addFlash(MT::ERROR, "Something went wrong. $this->entityClassName update failed!");
+                        }
                     }
                     else {
                         $this->addFlash(MT::ERROR, "$this->entityClassName update failed!");

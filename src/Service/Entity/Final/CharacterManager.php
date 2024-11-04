@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @template-extends AbstractNamedEntityManager<Character>
+ * @template-extends AbstractNamedEntityManager<Character, CharacterRepository>
  */
 readonly class CharacterManager extends AbstractNamedEntityManager {
 

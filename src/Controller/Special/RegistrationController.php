@@ -4,6 +4,7 @@ namespace App\Controller\Special;
 
 use App\Constant\MessageType as MT;
 use App\Entity\Final\User;
+use App\Exception\SecretValidationFailedException;
 use App\Form\Special\RegistrationType;
 use App\Security\Registration\EmailVerifier;
 use App\Service\Entity\Final\UserManager;
@@ -13,9 +14,13 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -23,7 +28,8 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController {
 
     public function __construct(
-        private readonly EmailVerifier $emailVerifier,
+        private readonly EmailVerifier   $emailVerifier,
+        private readonly MailerInterface $mailer,
     ) {}
 
     #[Route('/Register', name: 'Register')]
@@ -37,25 +43,20 @@ class RegistrationController extends AbstractController {
                 /** @var string $plainPassword */
                 $plainPassword = $form->get('plainPassword')->getData();
                 $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-                $userManager->create($user);
 
                 try {
-                    $this->emailVerifier->sendEmailConfirmation(
-                        'Registration_VerifyEmail', $user,
-                        (new TemplatedEmail())
-                            ->from(new Address('support@hellosymfony.com', 'Support'))
-                            ->to((string) $user->getEmail())
-                            ->subject("Please Confirm your Email")
-                            ->htmlTemplate('/Security/ConfirmationEmail.html.twig'),
-                    );
-                    $this->addFlash(MT::INFO, 'Please check your emails and use the link to verify your account.');
+                    $userManager->create($user);
+                    $this->sendVerificationEmail($user, false);
+                    $this->addFlash(MT::SUCCESS, 'Registration Successful!');
+                    return $security->login($user, 'form_login', 'main');
                 }
-                catch(TransportExceptionInterface $e) {
-                    $this->addFlash(MT::WARNING, 'Something went wrong while sending the verification email. You can ask for another one in your profile.');
+                catch(SecretValidationFailedException $e) {
+                    $this->sendVerificationEmail($user, true);
+                    return $this->redirectToRoute('Main_Home');
                 }
-
-                $this->addFlash(MT::SUCCESS, 'Registration Successful!');
-                return $security->login($user, 'form_login', 'main');
+                catch(ValidationFailedException $e) {
+                    $this->addFlash(MT::ERROR, $e->getMessage());
+                }
             }
             else {
                 $this->addFlash(MT::ERROR, "Registration failed!");
@@ -66,9 +67,8 @@ class RegistrationController extends AbstractController {
     }
 
     #[Route('/VerifyEmail', name: 'VerifyEmail')]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         try {
             /** @var User $user */
             $user = $this->getUser();
@@ -83,9 +83,38 @@ class RegistrationController extends AbstractController {
         return $this->redirectToRoute('Main_Home');
     }
 
+    private function sendVerificationEmail(User $user, bool $alreadyExists): void {
+        try {
+            if($alreadyExists) {
+                $this->mailer->send(
+                    (new TemplatedEmail())
+                        ->from(new Address('support@hellosymfony.com', 'Support'))
+                        ->to((string) $user->getEmail())
+                        ->subject("You already have an account")
+                        ->htmlTemplate('Email/AlreadyExistsEmail.html.twig'),
+                );
+            }
+            else {
+                $this->emailVerifier->sendEmailConfirmation(
+                    'Registration_VerifyEmail',
+                    $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('support@hellosymfony.com', 'Support'))
+                        ->to((string) $user->getEmail())
+                        ->subject("Please Confirm your Email")
+                        ->htmlTemplate('Email/VerificationEmail.html.twig'),
+                );
+            }
+
+            $this->addFlash(MT::INFO, 'Please check your emails.');
+        }
+        catch(TransportExceptionInterface $e) {
+            $this->addFlash(MT::WARNING, 'Something went wrong while sending the verification email. You can ask for another one in your profile.');
+        }
+    }
+
     // TODO add a profile page
     // TODO if the user is not verified display a message and a button to send a verification mail (in profile page)
-    // TODO link to ToS (in profile page)
     // TODO button to change password (in profile page)
 
 }

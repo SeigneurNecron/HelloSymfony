@@ -4,10 +4,12 @@ namespace App\Service\Entity\Base;
 
 use App\Entity\Base\AbstractNameableEntity;
 use App\Enum\QueryMode;
+use App\Repository\Base\AbstractNameableEntityRepository;
 
 /**
  * @template E of AbstractNameableEntity
- * @template-extends AbstractEntityManager<E>
+ * @template R of AbstractNameableEntityRepository<E>
+ * @template-extends AbstractEntityManager<E, R>
  */
 abstract readonly class AbstractNameableEntityManager extends AbstractEntityManager {
 

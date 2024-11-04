@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @template-extends AbstractNamedEntityManager<WeaponCategory>
+ * @template-extends AbstractNamedEntityManager<WeaponCategory, WeaponCategoryRepository>
  */
 readonly class WeaponCategoryManager extends AbstractNamedEntityManager {
 

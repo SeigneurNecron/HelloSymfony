@@ -7,7 +7,7 @@ use App\Enum\QueryMode;
 
 /**
  * @template E of AbstractNameableEntity
- * @extends AbstractEntityRepository<E>
+ * @template-extends AbstractEntityRepository<E>
  */
 abstract class AbstractNameableEntityRepository extends AbstractEntityRepository {
 

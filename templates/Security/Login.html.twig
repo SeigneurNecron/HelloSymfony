@@ -17,11 +17,19 @@
         {{ form(form) }}
 
         <div class="alert alert-primary">
-            No account yet? What are you waiting for!
-            {% include 'Include/Button.html.twig' with {'linkInfo': {
-                route: 'Registration_Register',
-                title: "Register",
-            }} %}
+            <div>
+                No account yet? What are you waiting for!
+                {% include 'Include/Button.html.twig' with {'linkInfo': {
+                    route: 'Registration_Register',
+                    title: "Register",
+                }} %}
+            </div>
+            <div>
+                {% include 'Include/Link.html.twig' with {'linkInfo': {
+                    route: 'Main_ToS',
+                    title: "Terms and conditions",
+                }} %}
+            </div>
         </div>
     {% endif %}
 {% endblock %}
