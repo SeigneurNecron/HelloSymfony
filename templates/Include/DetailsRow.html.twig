@@ -1,26 +1,29 @@
 <tr>
     <td>
-        <div>
-            {{ field|u.snake|replace({'_': ' '})|capitalize }}:
-        </div>
+        {{ field|u.snake|replace({'_': ' '})|capitalize }}:
     </td>
     <td>
-        <div>
-            {% with %}
-                {% set fieldValue = attribute(entity, field) %}
-                {% if fieldValue|isNameableEntity %}
-                    {% include 'Include/Link.html.twig' with {'linkInfo': {
-                        route: fieldValue|getClassSimpleName ~ '_Details',
-                        routeParams: {'slug': fieldValue.slug},
-                        title: fieldValue.name,
-                        permission: READ,
-                        entityClass: fieldValue|getClassSimpleName,
-                        showTextIfNotGranted: true,
-                    }} %}
+        {% with %}
+            {% set fieldValue = attribute(entity, field) %}
+            {% if fieldValue|isNameableEntity %}
+                {% include 'Include/Link.html.twig' with {'linkInfo': {
+                    route: fieldValue|getClassSimpleName ~ '_Details',
+                    routeParams: {'slug': fieldValue.slug},
+                    title: fieldValue.name,
+                    permission: READ,
+                    entityClass: fieldValue|getClassSimpleName,
+                    showTextIfNotGranted: true,
+                }} %}
+            {% else %}
+                {% set fieldToString = fieldValue|mixedToString %}
+                {% if fieldToString|isMultiline %}
+                    {% for line in fieldToString|getLines %}
+                        <p>{{ line }}</p>
+                    {% endfor %}
                 {% else %}
-                    {{ fieldValue|mixedToString }}
+                    {{ fieldToString }}
                 {% endif %}
-            {% endwith %}
-        </div>
+            {% endif %}
+        {% endwith %}
     </td>
 </tr>

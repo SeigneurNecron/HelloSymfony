@@ -16,6 +16,15 @@ body {
     }
 }
 
+table.details {
+    border-collapse: separate;
+    border-spacing: 1rem;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
 table.bg-transparent tr {
     td, th {
         background-color: rgba(0 0 0 / 0) !important;

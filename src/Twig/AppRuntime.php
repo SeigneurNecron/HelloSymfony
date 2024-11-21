@@ -21,6 +21,8 @@ use UnitEnum;
 
 class AppRuntime implements RuntimeExtensionInterface {
 
+    private const NEW_LINE = "\n";
+
     private readonly array $entityClasses;
 
     public function __construct() {
@@ -97,6 +99,14 @@ class AppRuntime implements RuntimeExtensionInterface {
 
     public function getParentEntityFields(object $entity): array {
         return Reflect::getFieldsWithAttribute($entity, OneToMany::class);
+    }
+
+    public function isMultiline(string $str): bool {
+        return str_contains($str, self::NEW_LINE);
+    }
+
+    public function getLines(string $str): array {
+        return explode(self::NEW_LINE, $str);
     }
 
 }

@@ -4,7 +4,7 @@
 {% set detailsFields = detailsFields|default([]) %}
 
 {% block body %}
-    <table>
+    <table class="details">
         {% for detailsField in detailsFields %}
             {% include '/Include/DetailsRow.html.twig' with {'field': detailsField} %}
         {% else %}

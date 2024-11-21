@@ -18,6 +18,8 @@ class AppExtension extends AbstractExtension {
             new TwigFilter('isNameableEntity', [AppRuntime::class, 'isNameableEntity']),
             new TwigFilter('isNamedEntity', [AppRuntime::class, 'isNamedEntity']),
             new TwigFilter('getParentEntityFields', [AppRuntime::class, 'getParentEntityFields']),
+            new TwigFilter('isMultiline', [AppRuntime::class, 'isMultiline']),
+            new TwigFilter('getLines', [AppRuntime::class, 'getLines']),
         ];
     }
 
