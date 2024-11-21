@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Entity\Base\AbstractNameableEntity;
 use App\Entity\Base\AbstractNamedEntity;
+use App\Entity\Final\ArtifactSet;
 use App\Entity\Final\Character;
 use App\Entity\Final\Element;
 use App\Entity\Final\Region;
@@ -23,7 +24,7 @@ class AppRuntime implements RuntimeExtensionInterface {
     private readonly array $entityClasses;
 
     public function __construct() {
-        $entityFQNs    = [Character::class, Element::class, WeaponCategory::class, Region::class, User::class];
+        $entityFQNs    = [Character::class, Element::class, WeaponCategory::class, Region::class, ArtifactSet::class, User::class];
         $entityClasses = [];
 
         foreach($entityFQNs as $entityFQN) {
