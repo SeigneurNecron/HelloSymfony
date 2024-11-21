@@ -19,6 +19,10 @@ class ElementFixtures extends AbstractFixtures {
     protected function getEntityInfos(): array {
         return [
             [
+                'name'  => 'None',
+                'color' => 'white',
+            ],
+            [
                 'name'  => 'Electro',
                 'color' => 'purple',
             ],

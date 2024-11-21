@@ -19,6 +19,9 @@ class RegionFixtures extends AbstractFixtures {
     protected function getEntityInfos(): array {
         return [
             [
+                'name' => 'None',
+            ],
+            [
                 'name' => 'Mondstadt',
             ],
             [
@@ -35,6 +38,9 @@ class RegionFixtures extends AbstractFixtures {
             ],
             [
                 'name' => 'Natlan',
+            ],
+            [
+                'name' => 'Snezhnaya',
             ],
         ];
     }
