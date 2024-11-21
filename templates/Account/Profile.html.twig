@@ -3,7 +3,9 @@
 {% set titleStr = 'My Account' %}
 
 {% block body %}
-    {% if not app.user.verified %}
+    {% if app.user.verified %}
+        {# TODO button-link to a page to change password #}
+    {% else %}
         <div class="alert alert-primary">
             <div>
                 Your email hasn't been verified yet. Please, check your emails.

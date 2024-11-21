@@ -50,7 +50,4 @@ class AccountController extends AbstractController {
         return $this->render('Account/Profile.html.twig', ['form' => $form]);
     }
 
-    // TODO if the user is not verified display a message and a button to send a verification mail (in profile page)
-    // TODO button to change password (in profile page)
-
 }
